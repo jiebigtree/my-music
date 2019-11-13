@@ -28,12 +28,12 @@
       </div>
       <div class="menus">
         <div class="one-menu" v-for="(one, index) in songMenu" :key="index">
-          <div>
-            <svg-icon iconClass="bofang"></svg-icon>
-            <span>{{ one.playCount | numFilter }}</span>
+          <div class="play-count">
+            <svg-icon iconClass="bofang" style="fill:white"></svg-icon>
+            <span class="play-num">{{ one.playCount | numFilter }}</span>
           </div>
           <img :src="one.picUrl" alt="" />
-          <span>{{ one.name }}</span>
+          <span class="one-name">{{ one.name }}</span>
         </div>
       </div>
     </div>
@@ -128,12 +128,14 @@ export default {
     flex-wrap wrap
     justify-content space-around
     .one-menu
+      position relative
       width 30%
       border-radius 5px
+      margin 5px 0
       img
         width 100%
         border-radius 5px
-      span
+      .one-name
         width 100%
         display inline-block
         color $fontColor
@@ -159,4 +161,16 @@ export default {
       float right
       font-size 12px
       margin-right 5px
+  .play-count
+    position absolute
+    right 5px
+    text-shadow 2px 2px 2px black
+    top 0
+    text-align right
+    font-size 10px
+    height 20px
+    line-height 20px
+    .play-num
+      margin-left 4px
+      color white
 </style>
