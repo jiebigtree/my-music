@@ -1,19 +1,22 @@
 <template>
   <div class="tab-container">
     <div class="tab">
-    <div class="tab-container">
-      <router-link
-        tag="div"
-        v-for="(one, index) in tabButtons"
-        :key="index"
-        class="tab-item"
-        :to="one.to"
-      >
-        <img :src="one.icon" alt="" width="30px" />
-        <span class="tab-span">{{ one.name }}</span>
-      </router-link>
+      <div class="tab-container">
+        <router-link
+          tag="div"
+          v-for="(one, index) in tabButtons"
+          :key="index"
+          class="tab-item"
+          :to="one.to"
+        >
+          <svg-icon
+            :iconClass="one.iconClass"
+            style="width:20px;height:20px;fill:white"
+          ></svg-icon>
+          <span class="tab-span">{{ one.name }}</span>
+        </router-link>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -24,27 +27,27 @@ export default {
     return {
       tabButtons: [
         {
-          icon: require("../../assets/images/icons/netMusic.png"),
+          iconClass: "menu",
           name: "发现",
           to: "/finding"
         },
         {
-          icon: require("../../assets/images/icons/netMusic.png"),
+          iconClass: "menu",
           name: "视频",
           to: "/radio"
         },
         {
-          icon: require("../../assets/images/icons/netMusic.png"),
+          iconClass: "menu",
           name: "我的",
           to: "/mine"
         },
         {
-          icon: require("../../assets/images/icons/netMusic.png"),
+          iconClass: "menu",
           name: "云村",
           to: "/cloud"
         },
         {
-          icon: require("../../assets/images/icons/netMusic.png"),
+          iconClass: "menu",
           name: "账号",
           to: "/account"
         }
@@ -74,14 +77,11 @@ export default {
     justify-content space-around
     .tab-item
       text-align center
-      margin 2px 0
+      margin 4px 0
       .tab-span
         display block
         font-size 10px
-        margin-top 2px
+        margin-top 4px
   .router-link-active
     color red
-    img
-      background-color red
-      border-radius 50%
 </style>

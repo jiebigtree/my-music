@@ -1,25 +1,19 @@
 <template>
   <div class="finding">
     <topHeader>
+      <svg-icon
+        iconClass="menu"
+        slot="left-icon"
+        style="fill:white;width:20px;height:20px"
+      ></svg-icon>
       <input type="text" slot="center-search" :placeholder="searchKeyword" />
     </topHeader>
     <div class="banner-container">
-      <cube-slide ref="slide" :data="banerPic" :interval="3000">
-        <cube-slide-item v-for="(item, index) in banerPic" :key="index">
-          <!-- <a :href="item.url"> -->
+      <van-swipe :autoplay="3000">
+        <van-swipe-item v-for="(item, index) in banerPic" :key="index">
           <img :src="item.pic" width="100%" />
-          <!-- </a> -->
-        </cube-slide-item>
-        <template slot="dots" slot-scope="props">
-          <span
-            class="my-dot"
-            :class="{ active: props.current === index }"
-            v-for="(item, index) in props.dots"
-            :key="index"
-            >{{ index + 1 }}</span
-          >
-        </template>
-      </cube-slide>
+        </van-swipe-item>
+      </van-swipe>
     </div>
     <div class="song-menu-containerb">
       <div class="river-title">
@@ -29,7 +23,10 @@
       <div class="menus">
         <div class="one-menu" v-for="(one, index) in songMenu" :key="index">
           <div class="play-count">
-            <svg-icon iconClass="bofang" style="fill:white"></svg-icon>
+            <svg-icon
+              iconClass="bofang"
+              style="fill:white;width:15px;height:15px"
+            ></svg-icon>
             <span class="play-num">{{ one.playCount | numFilter }}</span>
           </div>
           <img :src="one.picUrl" alt="" />
@@ -119,10 +116,6 @@ export default {
     margin 10px auto
     border-radius 10px
     overflow hidden
-    .my-dot
-      width 8px
-      height 8px
-      border-radius 50%
   .menus
     display flex
     flex-wrap wrap
