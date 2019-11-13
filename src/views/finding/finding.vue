@@ -28,7 +28,10 @@
       </div>
       <div class="menus">
         <div class="one-menu" v-for="(one, index) in songMenu" :key="index">
-          <span>{{ one.playCount | numFilter }}</span>
+          <div>
+            <svg-icon iconClass="bofang"></svg-icon>
+            <span>{{ one.playCount | numFilter }}</span>
+          </div>
           <img :src="one.picUrl" alt="" />
           <span>{{ one.name }}</span>
         </div>

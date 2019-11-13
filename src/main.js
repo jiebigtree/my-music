@@ -4,12 +4,13 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import Cube from "cube-ui";
-import topHeader from './components/publicComponents/topHeader.vue'
+import topHeader from "./components/publicComponents/topHeader.vue";
+import "@/icons";
 
-import './assets/stylus/index.styl'
+import "./assets/stylus/index.styl";
 
 Vue.use(Cube);
-Vue.component("topHeader",topHeader)
+Vue.component("topHeader", topHeader);
 
 Vue.config.productionTip = false;
 
