@@ -9,9 +9,7 @@
           <slot name="center-search"> </slot>
         </div>
         <div class="right-icon">
-          <slot name="right-icon">
-            <i class="cubeic-alert" style="color:white"></i>
-          </slot>
+          <slot name="right-icon"> </slot>
         </div>
       </div>
     </div>

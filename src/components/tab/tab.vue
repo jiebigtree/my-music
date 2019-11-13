@@ -27,29 +27,24 @@ export default {
     return {
       tabButtons: [
         {
-          iconClass: "menu",
+          iconClass: "music",
           name: "发现",
           to: "/finding"
         },
         {
-          iconClass: "menu",
+          iconClass: "radio",
           name: "视频",
           to: "/radio"
         },
         {
-          iconClass: "menu",
+          iconClass: "mine",
           name: "我的",
           to: "/mine"
         },
         {
-          iconClass: "menu",
+          iconClass: "cloud",
           name: "云村",
           to: "/cloud"
-        },
-        {
-          iconClass: "menu",
-          name: "账号",
-          to: "/account"
         }
       ]
     };
@@ -61,6 +56,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
+@import "../../assets/stylus/common.styl"
 .tab-container
   width 100%
 .tab
@@ -69,8 +65,8 @@ export default {
   left 0
   right 0
   // height 50px
-  background-color black
-  color white
+  background-color $bgc
+  color $fontColor
   .tab-container
     display flex
     flex-direction row

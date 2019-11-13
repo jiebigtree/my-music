@@ -7,6 +7,11 @@
         style="fill:white;width:20px;height:20px"
       ></svg-icon>
       <input type="text" slot="center-search" :placeholder="searchKeyword" />
+      <svg-icon
+        iconClass="playing"
+        slot="right-icon"
+        style="fill:white;width:20px;height:20px"
+      ></svg-icon>
     </topHeader>
     <div class="banner-container">
       <van-swipe :autoplay="3000">
@@ -65,7 +70,7 @@ export default {
     },
     getSongMenu() {
       axios.get("http://localhost:3000/personalized?limit=6").then(res => {
-        console.log(res.data.result);
+        // console.log(res.data.result);
         this.songMenu = res.data.result;
       });
     },
@@ -73,6 +78,11 @@ export default {
       axios.get("http://localhost:3000/search/default").then(res => {
         // console.log(res.data.data);
         this.searchKeyword = res.data.data.realkeyword;
+      });
+    },
+    getNewDishes() {
+      axios.get("http://localhost:3000/album/newest").then(res => {
+        console.log(res.data);
       });
     }
   },
@@ -87,6 +97,7 @@ export default {
     this.getBannerPic();
     this.getSongMenu();
     this.getSearchKeyword();
+    this.getNewDishes();
   },
   mounted() {},
   filters: {
@@ -140,6 +151,7 @@ export default {
         -webkit-box-orient: vertical ;
         word-break: break-all ;
         height 30px
+        margin-top 2px
   .river-title
     width 100%
     height 50px
