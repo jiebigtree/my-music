@@ -41,6 +41,7 @@ export default {
   left 0
   height 50px
   background-color $bgc
+  z-index 9
   .slot-container
     height 100%
     display flex
@@ -56,4 +57,9 @@ export default {
         width 200px
         text-indent 10px
         color $fontColor
+      div
+        text-align center
+        width 200px
+        font-weight 900
+        color white
 </style>

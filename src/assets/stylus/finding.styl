@@ -36,16 +36,27 @@
     width 100%
     height 50px
     color $fontColor
-    line-height 50px
+    position relative
     span:first-child
       font-weight 900
       font-size 20px
       float left
       margin-left 5px
+      line-height 50px
     span:last-child
       float right
+      width: 60px
+      text-align: center
       font-size 12px
       margin-right 5px
+      border 1px solid $fontColor
+      height 20px
+      position: absolute
+      top: 50%;
+      margin-top: -10px
+      right 5px
+      line-height: 20px
+      border-radius 10px
   .play-count
     position absolute
     right 5px
@@ -69,11 +80,35 @@
       text-align center
       font-size 10px
       color $fontColor
-.ul li
-    background-color: yellow 
-    width: 50%
-    text-align: center
-    height 20px
-.ul li:hover
-    transform: translateX(30%)
-    transition: all 1s ease
+  .pop-list-container
+      width: 100%
+      height 60%
+      .my-name
+        margin 30px 0
+        padding-left: 10px
+    .pop-list-menu-container
+      width: 100%
+      height 60%
+      display flex
+      flex-direction column
+      justify-content space-around
+    .pop-list-menu-container div
+      padding: 0 15px
+      width: 50%
+      line-height: 300%
+      background-color: yellow
+      text-align: center
+  .dishes-container
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    .one-dish
+      width 30%
+      border-radius 5px
+      margin 5px 0
+      overflow hidden
+      .dash-name, .singer-name
+        display: block
+        font-size: 10px
+        line-height: 15px
+        color $fontColor

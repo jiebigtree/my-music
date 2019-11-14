@@ -12,6 +12,7 @@ const routes = [
   {
     path: "/finding",
     name: "finding",
+    meta: { index: 0 },
     component: Finding
   },
   {
@@ -20,35 +21,39 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
+    meta: { index: 1 },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/radio/radio.vue")
   },
   {
     path: "/mine",
     name: "mine",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    meta: { index: 1 },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/mine/mine.vue")
   },
   {
     path: "/cloud",
     name: "cloud",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    meta: { index: 1 },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/cloud/cloud.vue")
   },
   {
     path: "/account",
     name: "account",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    meta: { index: 1 },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/account/account.vue")
+  },
+  {
+    path: "/songMenu/:id",
+    name: "song-menu",
+    meta: { index: 2 },
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/finding/song-menu/songMenu.vue"
+      )
   }
 ];
 

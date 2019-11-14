@@ -34,14 +34,18 @@
         <span class="list-text">{{ one.text }}</span>
       </div>
     </div>
-    <hr style="background-color:#799d67" />
     <div class="song-menu-containerb">
       <div class="river-title">
         <span>推荐歌单</span>
         <span>歌单广场</span>
       </div>
       <div class="menus">
-        <div class="one-menu" v-for="(one, index) in songMenu" :key="index">
+        <div
+          class="one-menu"
+          v-for="(one, index) in songMenu"
+          :key="index"
+          @click="getSongMenuDetail(one.id)"
+        >
           <div class="play-count">
             <svg-icon
               iconClass="bofang"
@@ -54,16 +58,31 @@
         </div>
       </div>
     </div>
+    <div class="river-title">
+      <span>新碟</span>
+      <span>更多新碟</span>
+    </div>
+    <div class="dishes-container">
+      <div class="one-dish" v-for="(one, index) in newDish" :key="index">
+        <img :src="one.blurPicUrl" alt="" width="100%" />
+        <span class="dash-name"> {{ one.name }} </span>
+        <span class="singer-name"> {{ one.artist.name }} </span>
+      </div>
+    </div>
     <van-popup
       v-model="show"
       position="left"
       :style="{ width: '45%', height: '100%' }"
     >
-      <ul class="ul">
-        <li>aa</li>
-        <li>aa</li>
-        <li>cc</li>
-      </ul>
+      <div class="pop-list-container">
+        <div class="my-name">Jerry树上的鱼熟了</div>
+        <div class="pop-list-menu-container">
+          <div>设置</div>
+          <div>主题</div>
+          <div>定时关闭</div>
+          <div>关于</div>
+        </div>
+      </div>
     </van-popup>
   </div>
 </template>
@@ -85,7 +104,8 @@ export default {
         { iconClass: "mine", text: "电台", pageName: "" },
         { iconClass: "account", text: "直播", pageName: "" }
       ],
-      show: false
+      show: false,
+      newDish: []
     };
   },
   methods: {
@@ -94,16 +114,18 @@ export default {
         this.banerPic = res.data.banners;
       });
     },
-    showDialog() {
-      this.$createDialog({
-        type: "alert",
-        title: "Alert",
-        content: "dialog content"
-      }).show();
-    },
     getSongMenu() {
       axios.get("http://localhost:3000/personalized?limit=6").then(res => {
         this.songMenu = res.data.result;
+        // console.log(this.songMenu);
+      });
+    },
+    getSongMenuDetail(id) {
+      this.$router.push({
+        name: "song-menu",
+        params: {
+          id: id
+        }
       });
     },
     getSearchKeyword() {
@@ -113,12 +135,17 @@ export default {
     },
     getNewDishes() {
       axios.get("http://localhost:3000/album/newest").then(res => {
-        console.log(res.data);
+        let emptyArray = [];
+        // console.log(res.data.albums);
+        emptyArray = res.data.albums;
+        this.newDish = emptyArray.slice(0, 3);
+        // console.log(this.newDish);
       });
     },
     leftMenu() {
       this.show = !this.show;
     }
+    // 2912091415
   },
   created() {
     this.getBannerPic();
@@ -135,6 +162,8 @@ export default {
         } else {
           num = parseInt(num / 10000) + "万";
         }
+      } else {
+        return num;
       }
       return num;
     }
