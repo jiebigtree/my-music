@@ -52,4 +52,8 @@ export default {
         height 25px
         border-radius 15px
         background-color $bgGray
+        font-size 12px
+        width 200px
+        text-indent 10px
+        color $fontColor
 </style>

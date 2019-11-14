@@ -1,11 +1,13 @@
 <template>
   <div class="finding">
     <topHeader>
-      <svg-icon
-        iconClass="menu"
-        slot="left-icon"
-        style="fill:white;width:20px;height:20px"
-      ></svg-icon>
+      <div slot="left-icon" @click="leftMenu()">
+        <svg-icon
+          iconClass="menu"
+          style="fill:white;width:20px;height:20px"
+        ></svg-icon>
+      </div>
+
       <input type="text" slot="center-search" :placeholder="searchKeyword" />
       <svg-icon
         iconClass="playing"
@@ -20,6 +22,19 @@
         </van-swipe-item>
       </van-swipe>
     </div>
+
+    <div class="list-container">
+      <div class="one-list" v-for="(one, index) in list" :key="index">
+        <div class="svg-container">
+          <svg-icon
+            :iconClass="one.iconClass"
+            style="fill:white;width:20px;height:20px"
+          ></svg-icon>
+        </div>
+        <span class="list-text">{{ one.text }}</span>
+      </div>
+    </div>
+    <hr style="background-color:#799d67" />
     <div class="song-menu-containerb">
       <div class="river-title">
         <span>推荐歌单</span>
@@ -39,6 +54,17 @@
         </div>
       </div>
     </div>
+    <van-popup
+      v-model="show"
+      position="left"
+      :style="{ width: '45%', height: '100%' }"
+    >
+      <ul class="ul">
+        <li>aa</li>
+        <li>aa</li>
+        <li>cc</li>
+      </ul>
+    </van-popup>
   </div>
 </template>
 
@@ -51,13 +77,20 @@ export default {
     return {
       banerPic: [],
       songMenu: [],
-      searchKeyword: ""
+      searchKeyword: "",
+      list: [
+        { iconClass: "music", text: "每日推荐", pageName: "" },
+        { iconClass: "radio", text: "歌单", pageName: "" },
+        { iconClass: "cloud", text: "排行榜", pageName: "" },
+        { iconClass: "mine", text: "电台", pageName: "" },
+        { iconClass: "account", text: "直播", pageName: "" }
+      ],
+      show: false
     };
   },
   methods: {
     getBannerPic() {
       axios.get("http://localhost:3000/banner?type=2").then(res => {
-        // console.log(res.data.banners);
         this.banerPic = res.data.banners;
       });
     },
@@ -70,13 +103,11 @@ export default {
     },
     getSongMenu() {
       axios.get("http://localhost:3000/personalized?limit=6").then(res => {
-        // console.log(res.data.result);
         this.songMenu = res.data.result;
       });
     },
     getSearchKeyword() {
       axios.get("http://localhost:3000/search/default").then(res => {
-        // console.log(res.data.data);
         this.searchKeyword = res.data.data.realkeyword;
       });
     },
@@ -84,16 +115,12 @@ export default {
       axios.get("http://localhost:3000/album/newest").then(res => {
         console.log(res.data);
       });
+    },
+    leftMenu() {
+      this.show = !this.show;
     }
   },
   created() {
-    // axios
-    // .get(
-    // "http://localhost:3000/login/cellphone?phone=18846914587&password=netmusic4587"
-    // )
-    // .then(res => {
-    // console.log(res.data)
-    // });
     this.getBannerPic();
     this.getSongMenu();
     this.getSearchKeyword();
@@ -118,64 +145,5 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 @import "../../assets/stylus/common.styl"
-.finding
-  width 100%
-  height 100%
-  background-color $bgc
-  .banner-container
-    width 90%
-    margin 10px auto
-    border-radius 10px
-    overflow hidden
-  .menus
-    display flex
-    flex-wrap wrap
-    justify-content space-around
-    .one-menu
-      position relative
-      width 30%
-      border-radius 5px
-      margin 5px 0
-      img
-        width 100%
-        border-radius 5px
-      .one-name
-        width 100%
-        display inline-block
-        color $fontColor
-        font-size 10px
-        line-height 15px
-        overflow: hidden ;
-        display: -webkit-box ;
-        -webkit-line-clamp: 2 ;
-        -webkit-box-orient: vertical ;
-        word-break: break-all ;
-        height 30px
-        margin-top 2px
-  .river-title
-    width 100%
-    height 50px
-    color $fontColor
-    line-height 50px
-    span:first-child
-      font-weight 900
-      font-size 20px
-      float left
-      margin-left 5px
-    span:last-child
-      float right
-      font-size 12px
-      margin-right 5px
-  .play-count
-    position absolute
-    right 5px
-    text-shadow 2px 2px 2px black
-    top 0
-    text-align right
-    font-size 10px
-    height 20px
-    line-height 20px
-    .play-num
-      margin-left 4px
-      color white
+@import "../../assets/stylus/finding.styl"
 </style>

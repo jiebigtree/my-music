@@ -1,0 +1,79 @@
+.finding
+  width 100%
+  height 100%
+  background-color $bgc
+  .banner-container
+    width 90%
+    margin 10px auto
+    border-radius 10px
+    overflow hidden
+  .menus
+    display flex
+    flex-wrap wrap
+    justify-content space-around
+    .one-menu
+      position relative
+      width 30%
+      border-radius 5px
+      margin 5px 0
+      img
+        width 100%
+        border-radius 5px
+      .one-name
+        width 100%
+        display inline-block
+        color $fontColor
+        font-size 10px
+        line-height 15px
+        overflow: hidden ;
+        display: -webkit-box ;
+        -webkit-line-clamp: 2 ;
+        -webkit-box-orient: vertical ;
+        word-break: break-all ;
+        height 30px
+        margin-top 2px
+  .river-title
+    width 100%
+    height 50px
+    color $fontColor
+    line-height 50px
+    span:first-child
+      font-weight 900
+      font-size 20px
+      float left
+      margin-left 5px
+    span:last-child
+      float right
+      font-size 12px
+      margin-right 5px
+  .play-count
+    position absolute
+    right 5px
+    text-shadow 2px 2px 2px black
+    top 0
+    text-align right
+    font-size 10px
+    height 20px
+    line-height 20px
+    .play-num
+      margin-left 4px
+      color white
+  .list-container
+    display flex
+    justify-content space-around
+    width 100%
+    margin 15px 0
+    .svg-container
+      text-align center
+    .list-text
+      text-align center
+      font-size 10px
+      color $fontColor
+.ul li
+    background-color: yellow 
+    width: 50%
+    text-align: center
+    height 20px
+.ul li:hover
+    transform: translateX(30%)
+    transition: all 1s ease

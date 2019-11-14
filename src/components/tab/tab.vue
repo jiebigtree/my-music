@@ -59,6 +59,7 @@ export default {
 @import "../../assets/stylus/common.styl"
 .tab-container
   width 100%
+  height 50px
 .tab
   position fixed
   bottom 0

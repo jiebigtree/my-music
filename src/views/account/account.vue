@@ -1,44 +1,52 @@
 <template>
   <div class="new-music">
-    我的账户
-    手机号：<input type="text" v-model="phone"><br>
-    密码：<input type="text" v-model="psw">
+    我的账户 手机号：<input type="text" v-model="phone" /><br />
+    密码：<input type="text" v-model="psw" />
     <button @click="logIn">login</button>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-  name: 'radio',
-  data () {
+  name: "radio",
+  data() {
     return {
       allDatas: [],
-      phone: '',
-      psw: ''
-    }
+      phone: "",
+      psw: ""
+    };
   },
   methods: {
-    logIn () {
-      let url = 'http://localhost:3000/login/cellphone?phone=' + this.phone + '&password=' + this.psw
+    logIn() {
+      let url =
+        "http://localhost:3000/login/cellphone?phone=" +
+        this.phone +
+        "&password=" +
+        this.psw;
       axios.get(url).then(res => {
-        console.log(res.data)
-      })
+        console.log(res.data);
+      });
     },
-    getMyInfor () {
-      axios.get('http://localhost:3000/user/detail?uid=1786358465').then(res => {
-        console.log(res.data)
-      })
+    getMyInfor() {
+      axios
+        .get("http://localhost:3000/user/detail?uid=1786358465")
+        .then(res => {
+          console.log(res.data);
+        });
     }
   },
-  created () {
-    // this.logIn()
-    // this.getMyInfor()
+  created() {
+    // axios
+    // .get(
+    // "http://localhost:3000/login/cellphone?phone=18846914587&password=netmusic4587"
+    // )
+    // .then(res => {
+    // console.log(res.data)
+    // });
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>
