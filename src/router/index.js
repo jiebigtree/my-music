@@ -56,7 +56,7 @@ const routes = [
       )
   },
   {
-    path: "/playing/:songId",
+    path: "/playing/:songId/:songPic",
     name: "playing",
     meta: { index: 2 },
     component: () =>

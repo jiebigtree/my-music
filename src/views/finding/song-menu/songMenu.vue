@@ -1,12 +1,6 @@
 <template>
   <div class="song-menu">
     <topHeader>
-      <div slot="left-icon" @click="goBack">
-        <svg-icon
-          iconClass="menu"
-          style="fill:white;width:20px;height:20px"
-        ></svg-icon>
-      </div>
       <div slot="center-search">歌单</div>
       <svg-icon
         iconClass="playing"
@@ -28,27 +22,18 @@
         <div class="editor-infor">
           <img :src="avatarUrl" alt="" width="30px" class="head-pic" />
           <span class="editor">{{ nickname }}</span>
-          <svg-icon
-            iconClass="menu"
-            style="fill:white;width:15px;height:15px"
-          ></svg-icon>
+          <svg-icon iconClass="menu" style="width:15px;height:15px"></svg-icon>
         </div>
         <span class="list-description">{{ description }}</span>
       </div>
     </div>
     <div class="operate">
       <div>
-        <svg-icon
-          iconClass="menu"
-          style="fill:white;width:20px;height:20px"
-        ></svg-icon>
+        <svg-icon iconClass="menu" style="width:20px;height:20px"></svg-icon>
         <span>206</span>
       </div>
       <div>
-        <svg-icon
-          iconClass="menu"
-          style="fill:white;width:20px;height:20px"
-        ></svg-icon>
+        <svg-icon iconClass="menu" style="width:20px;height:20px"></svg-icon>
         <span>206</span>
       </div>
       <div>
@@ -101,10 +86,10 @@ export default {
         this.nickname = this.menuDetail.playlist.creator.nickname;
         this.description = this.menuDetail.playlist.description;
       });
-    },
-    goBack() {
-      this.$router.go(-1);
     }
+    // toGetPic(data) {
+    //   console.log(data);
+    // }
   },
   created() {
     this.getMenuData();

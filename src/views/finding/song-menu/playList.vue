@@ -31,7 +31,8 @@ export default {
     return {
       listArray: {},
       singer: "",
-      alubum: ""
+      alubum: "",
+      alPicUrl: ""
     };
   },
   methods: {
@@ -43,13 +44,16 @@ export default {
         this.listArray = res.data.songs[0];
         this.singer = res.data.songs[0].ar[0].name;
         this.alubum = res.data.songs[0].al.name;
+        this.alPicUrl = res.data.songs[0].al.picUrl;
       });
     },
     oneMusic() {
+      // this.$emit("toGetPic", this.alPicUrl);
       this.$router.push({
         name: "playing",
         params: {
-          songId: this.idnum
+          songId: this.idnum,
+          songPic: this.alPicUrl
         }
       });
     }

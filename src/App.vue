@@ -3,7 +3,7 @@
     <!-- <transition :name="transitionName"> -->
     <router-view></router-view>
     <!-- </transition> -->
-    <tab></tab>
+    <tab v-if="showTab"></tab>
   </div>
 </template>
 <script>
@@ -36,6 +36,15 @@ export default {
         this.transitionName = "slide-left";
       } else {
         this.transitionName = "slide-right";
+      }
+    }
+  },
+  computed: {
+    showTab() {
+      if (this.$route.name == "playing") {
+        return false;
+      } else {
+        return true;
       }
     }
   }

@@ -2,8 +2,13 @@
   <div class="top-header-conatiner">
     <div class="top-header">
       <div class="slot-container">
-        <div class="left-icon">
-          <slot name="left-icon"> </slot>
+        <div class="left-icon" @click="goBack">
+          <slot name="left-icon">
+            <svg-icon
+              iconClass="back"
+              style="width:20px;height:20px"
+            ></svg-icon>
+          </slot>
         </div>
         <div class="center-search">
           <slot name="center-search"> </slot>
@@ -23,7 +28,11 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
+  },
   created() {}
 };
 </script>
