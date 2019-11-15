@@ -54,6 +54,15 @@ const routes = [
       import(
         /* webpackChunkName: "about" */ "../views/finding/song-menu/songMenu.vue"
       )
+  },
+  {
+    path: "/playing/:songId",
+    name: "playing",
+    meta: { index: 2 },
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/finding/song-menu/playing.vue"
+      )
   }
 ];
 

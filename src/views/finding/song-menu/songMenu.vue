@@ -21,26 +21,19 @@
     />
     <div class="song-menu-header">
       <div class="menu-pic">
-        <img :src="menuDetail.playlist.coverImgUrl" alt="" width="100%" />
+        <img :src="coverImgUrl" alt="" width="100%" />
       </div>
       <div class="menu-description">
-        <h1>{{ menuDetail.playlist.name }}</h1>
+        <h1>{{ name }}</h1>
         <div class="editor-infor">
-          <img
-            :src="menuDetail.playlist.creator.avatarUrl"
-            alt=""
-            width="30px"
-            class="head-pic"
-          />
-          <span class="editor">{{ menuDetail.playlist.creator.nickname }}</span>
+          <img :src="avatarUrl" alt="" width="30px" class="head-pic" />
+          <span class="editor">{{ nickname }}</span>
           <svg-icon
             iconClass="menu"
             style="fill:white;width:15px;height:15px"
           ></svg-icon>
         </div>
-        <span class="list-description">{{
-          menuDetail.playlist.description
-        }}</span>
+        <span class="list-description">{{ description }}</span>
       </div>
     </div>
     <div class="operate">
@@ -68,7 +61,7 @@
     </div>
     <div class="play-list-conatiner">
       <div class="play-list">
-        <ul>
+        <ul class="play-list-ul">
           <li v-for="(one, index) in menuDetail.privileges" :key="index">
             <play-list :idnum="one.id" :index="index"></play-list>
           </li>
@@ -85,7 +78,13 @@ export default {
   name: "song-menu",
   data() {
     return {
-      menuDetail: {}
+      menuDetail: {},
+      coverImgUrl: "",
+      name: "",
+      avatarUrl: "",
+      creator: "",
+      nickname: "",
+      description: ""
     };
   },
   methods: {
@@ -93,8 +92,14 @@ export default {
       let url =
         "http://localhost:3000/playlist/detail?id=" + this.$route.params.id;
       axios.get(url).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         this.menuDetail = res.data;
+        this.coverImgUrl = this.menuDetail.playlist.coverImgUrl;
+        this.name = this.menuDetail.playlist.name;
+        this.creator = this.menuDetail.playlist.creator;
+        this.avatarUrl = this.menuDetail.playlist.creator.avatarUrl;
+        this.nickname = this.menuDetail.playlist.creator.nickname;
+        this.description = this.menuDetail.playlist.description;
       });
     },
     goBack() {

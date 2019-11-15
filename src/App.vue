@@ -46,7 +46,7 @@ export default {
 #app
     width 100%
     height 100%
-    background-color $bgc
+    background-color $bodybgc
     overflow hidden
 .slide-right-enter-active,
 .slide-right-leave-active,

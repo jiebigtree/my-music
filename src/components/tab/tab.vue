@@ -80,5 +80,5 @@ export default {
         font-size 10px
         margin-top 4px
   .router-link-active
-    color red
+    color white
 </style>
