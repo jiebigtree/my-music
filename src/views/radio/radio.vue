@@ -1,13 +1,15 @@
 <template>
   <div>
     <topHeader>
-      <input type="text" slot="center-search" />
-      <svg-icon
-        iconClass="playing"
-        slot="right-icon"
-        style="fill:white;width:20px;height:20px"
-      ></svg-icon>
+      <div slot="center-search">热门歌手</div>
+      <div @click="chaneg" slot="right-icon">
+        <svg-icon
+          iconClass="playing"
+          style="fill:white;width:20px;height:20px"
+        ></svg-icon>
+      </div>
     </topHeader>
+
     <scroll :data="data"> </scroll>
   </div>
 </template>
@@ -22,7 +24,8 @@ export default {
   data() {
     return {
       data: [],
-      pulldown: true
+      pulldown: true,
+      pageNum: 0
     };
   },
   created() {
@@ -30,13 +33,19 @@ export default {
   },
   methods: {
     loadData() {
-      // requestData().then(res => {
-      //   this.data = res.data.concat(this.data);
-      // });
-      axios.get("http://localhost:3000/personalized?limit=50").then(res => {
-        this.data = [...res.data.result];
+      let url =
+        "http://localhost:3000/top/artists?offset=" +
+        this.pageNum +
+        "&limit=30";
+      axios.get(url).then(res => {
+        this.data = [...this.data, ...res.data.artists];
         console.log(this.data);
       });
+    },
+    chaneg() {
+      console.log(this.pageNum);
+      this.pageNum++;
+      this.loadData();
     }
   }
 };

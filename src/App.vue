@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <!-- <transition :name="transitionName"> -->
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <!-- <keep-alive> -->
+    <router-view></router-view>
+    <!-- </keep-alive> -->
     <!-- </transition> -->
     <tab v-if="showTab"></tab>
   </div>

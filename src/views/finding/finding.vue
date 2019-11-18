@@ -15,82 +15,90 @@
         style="fill:white;width:20px;height:20px"
       ></svg-icon>
     </topHeader>
-    <div class="banner-container">
-      <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(item, index) in banerPic" :key="index">
-          <img :src="item.pic" width="100%" />
-        </van-swipe-item>
-      </van-swipe>
-    </div>
+    <scroll>
+      <div slot="list">
+        <div class="banner-container">
+          <van-swipe :autoplay="3000">
+            <van-swipe-item v-for="(item, index) in banerPic" :key="index">
+              <img :src="item.pic" width="100%" />
+            </van-swipe-item>
+          </van-swipe>
+        </div>
 
-    <div class="list-container">
-      <div class="one-list" v-for="(one, index) in list" :key="index">
-        <div class="svg-container">
-          <svg-icon
-            :iconClass="one.iconClass"
-            style="fill:white;width:20px;height:20px"
-          ></svg-icon>
-        </div>
-        <span class="list-text">{{ one.text }}</span>
-      </div>
-    </div>
-    <div class="song-menu-containerb">
-      <div class="river-title">
-        <span>推荐歌单</span>
-        <span>歌单广场</span>
-      </div>
-      <div class="menus">
-        <div
-          class="one-menu"
-          v-for="(one, index) in songMenu"
-          :key="index"
-          @click="getSongMenuDetail(one.id)"
-        >
-          <div class="play-count">
-            <svg-icon
-              iconClass="bofang"
-              style="fill:white;width:15px;height:15px"
-            ></svg-icon>
-            <span class="play-num">{{ one.playCount | numFilter }}</span>
+        <div class="list-container">
+          <div class="one-list" v-for="(one, index) in list" :key="index">
+            <div class="svg-container">
+              <svg-icon
+                :iconClass="one.iconClass"
+                style="fill:white;width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <span class="list-text">{{ one.text }}</span>
           </div>
-          <img :src="one.picUrl" alt="" />
-          <span class="one-name">{{ one.name }}</span>
         </div>
-      </div>
-    </div>
-    <div class="river-title">
-      <span>新碟</span>
-      <span>更多新碟</span>
-    </div>
-    <div class="dishes-container">
-      <div class="one-dish" v-for="(one, index) in newDish" :key="index">
-        <img :src="one.blurPicUrl" alt="" width="100%" />
-        <span class="dash-name"> {{ one.name }} </span>
-        <span class="singer-name"> {{ one.artist.name }} </span>
-      </div>
-    </div>
-    <van-popup
-      v-model="show"
-      position="left"
-      :style="{ width: '45%', height: '100%' }"
-    >
-      <div class="pop-list-container">
-        <div class="my-name">Jerry树上的鱼熟了</div>
-        <div class="pop-list-menu-container">
-          <div>设置</div>
-          <div>主题</div>
-          <div>定时关闭</div>
-          <div>关于</div>
+        <div class="song-menu-containerb">
+          <div class="river-title">
+            <span>推荐歌单</span>
+            <span>歌单广场</span>
+          </div>
+          <div class="menus">
+            <div
+              class="one-menu"
+              v-for="(one, index) in songMenu"
+              :key="index"
+              @click="getSongMenuDetail(one.id)"
+            >
+              <div class="play-count">
+                <svg-icon
+                  iconClass="bofang"
+                  style="fill:white;width:15px;height:15px"
+                ></svg-icon>
+                <span class="play-num">{{ one.playCount | numFilter }}</span>
+              </div>
+              <img :src="one.picUrl" alt="" />
+              <span class="one-name">{{ one.name }}</span>
+            </div>
+          </div>
         </div>
+        <div class="river-title">
+          <span>新碟</span>
+          <span>更多新碟</span>
+        </div>
+        <div class="dishes-container">
+          <div class="one-dish" v-for="(one, index) in newDish" :key="index">
+            <img :src="one.blurPicUrl" alt="" width="100%" />
+            <span class="dash-name"> {{ one.name }} </span>
+            <span class="singer-name"> {{ one.artist.name }} </span>
+          </div>
+        </div>
+        <van-popup
+          v-model="show"
+          position="left"
+          :style="{ width: '45%', height: '100%' }"
+        >
+          <div class="pop-list-container">
+            <div class="my-name">Jerry树上的鱼熟了</div>
+            <div class="pop-list-menu-container">
+              <div>设置</div>
+              <div>主题</div>
+              <div>定时关闭</div>
+              <div>关于</div>
+            </div>
+          </div>
+        </van-popup>
       </div>
-    </van-popup>
+    </scroll>
   </div>
 </template>
 
 <script>
+import scroll from "../../components/publicComponents/scroll.vue";
 import axios from "axios";
 
 export default {
+  components: {
+    scroll
+  },
   name: "finding",
   data() {
     return {
