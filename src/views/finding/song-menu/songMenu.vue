@@ -22,7 +22,7 @@
         <div class="editor-infor">
           <img :src="avatarUrl" alt="" width="30px" class="head-pic" />
           <span class="editor">{{ nickname }}</span>
-          <svg-icon iconClass="menu" style="width:15px;height:15px"></svg-icon>
+          <!-- <svg-icon iconClass="menu" style="width:15px;height:15px"></svg-icon> -->
         </div>
         <span class="list-description">{{ description }}</span>
       </div>
