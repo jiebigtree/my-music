@@ -10,7 +10,29 @@
       </div>
     </topHeader>
 
-    <scroll :data="data"> </scroll>
+    <scroll>
+      <div
+        v-for="(item, index) in data"
+        :key="index"
+        class="list-one"
+        slot="list-info"
+      >
+        <img :src="item.picUrl" alt="" class="singer-pic" />
+        <span class="singer-name">{{ item.name }}</span>
+        <button
+          @click="getSingerMV(item.id)"
+          style="float:right;width:50px;font-size:10px"
+        >
+          歌手MV
+        </button>
+        <button
+          @click="getSingerMusic(item.id)"
+          style="float:right;width:50px;font-size:10px"
+        >
+          歌手歌曲
+        </button>
+      </div>
+    </scroll>
   </div>
 </template>
 <script>
@@ -46,6 +68,20 @@ export default {
       console.log(this.pageNum);
       this.pageNum++;
       this.loadData();
+    },
+    getSingerMV(id) {
+      console.log("歌手MV");
+      let url = "http://localhost:3000/artist/mv?id=" + id;
+      axios.get(url).then(res => {
+        console.log(res.data);
+      });
+    },
+    getSingerMusic(id) {
+      console.log("歌手单曲");
+      let url = "http://localhost:3000/artists?id=" + id;
+      axios.get(url).then(res => {
+        console.log(res.data);
+      });
     }
   }
 };

@@ -2,14 +2,8 @@
   <div class="wrapper" ref="wrapper">
     <slot name="list">
       <ul>
-        <li
-          v-for="(item, index) in data"
-          :key="index"
-          @click="conso(item.id)"
-          class="list-one"
-        >
-          <img :src="item.picUrl" alt="" class="singer-pic" />
-          <span class="singer-name">{{ item.name }}</span>
+        <li>
+          <slot name="list-info"> </slot>
         </li>
       </ul>
     </slot>
