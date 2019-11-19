@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="operate">
-          <div>
+          <!-- <div>
             <svg-icon
               iconClass="menu"
               style="width:20px;height:20px"
@@ -50,7 +50,7 @@
               style="fill:white;width:20px;height:20px"
             ></svg-icon>
             <span>206</span>
-          </div>
+          </div> -->
         </div>
         <div class="play-list-conatiner">
           <div class="play-list">

@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div style="width:200px;height:200px;border:1px solid red">
-      <div v-for="(one, index) in mvArray" :key="index">
-        {{ one.name }}
-      </div>
+    <div v-if="mvArray.length > 0">
+      <ul class="items">
+        <li v-for="(one, index) in mvArray" :key="index" class="one-item">
+          <span class="index">{{ index + 1 }}</span>
+          <span class="name">{{ one.name }}</span>
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      这个歌手没有MV哦
     </div>
   </div>
 </template>
@@ -41,3 +47,22 @@ export default {
   }
 };
 </script>
+<style lang="stylus" scoped>
+.items
+  width 100%
+  .one-item
+    width 100%
+    height 40px
+    line-height 40px
+    .index
+      width 15%
+      text-align center
+      float left
+    .name
+      float left
+      width 60%
+      text-align left
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+</style>

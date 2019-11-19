@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bigest-container">
     <topHeader>
       <div slot="center-search">热门歌手</div>
       <div>
@@ -18,8 +18,20 @@
           </div>
         </div>
         <div class="tab">
-          <div @click="changeView('Song')">单曲</div>
-          <div @click="changeView('MV')">MV</div>
+          <div
+            @click="changeView('Song', true)"
+            :class="{ isCurrent: isCurrent }"
+            class="one-tab"
+          >
+            单曲
+          </div>
+          <div
+            @click="changeView('MV', false)"
+            :class="{ isCurrent: !isCurrent }"
+            class="one-tab"
+          >
+            MV
+          </div>
         </div>
         <component :is="currentView" :id="id"></component>
       </div>
@@ -44,13 +56,15 @@ export default {
       pic: this.$route.params.singerPic,
       name: this.$route.params.singerName,
       currentView: "singerSong",
-      style: `background-image:url(${this.$route.params.singerPic});width:100%;height:200px;background-position:center center;background-size:100%`
+      style: `background-image:url(${this.$route.params.singerPic});width:100%;height:200px;background-position:center center;background-size:100%`,
+      isCurrent: true
     };
   },
   methods: {
-    changeView: function(data) {
+    changeView: function(data, bool) {
       console.log(data);
       this.currentView = "singer" + data; //动态地改变currentView的值就可以动态挂载组件了。
+      this.isCurrent = bool;
     }
   },
   created() {}
@@ -64,7 +78,7 @@ export default {
   height 100%
   h1
     position absolute
-    bottom 25%
+    bottom 15%
     width 100%
     line-height 50px
     text-align center
@@ -75,6 +89,10 @@ export default {
   justify-content space-around
   height 40px
   width 100%
-  background-color yellow
   line-height 40px
+  .one-tab
+    width 50%
+    text-align center
+  .isCurrent
+    background-color rgba(0,0,0,.3)
 </style>
