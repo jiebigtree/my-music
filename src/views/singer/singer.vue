@@ -15,8 +15,8 @@
         v-for="(item, index) in data"
         :key="index"
         class="list-one"
-        slot="list-info"
-        @click="getSingerDetail(item.id)"
+        slot="singer-list"
+        @click="getSingerDetail(item.id, item.picUrl, item.name)"
       >
         <img :src="item.picUrl" alt="" class="singer-pic" />
         <span class="singer-name">{{ item.name }}</span>
@@ -25,7 +25,6 @@
   </div>
 </template>
 <script>
-import BScroll from "better-scroll";
 import scroll from "@/components/publicComponents/scroll.vue";
 import axios from "axios";
 export default {
@@ -59,11 +58,13 @@ export default {
       this.pageNum++;
       this.loadData();
     },
-    getSingerDetail(id) {
+    getSingerDetail(id, pic, name) {
       this.$router.push({
         name: "singer-detail",
         params: {
-          singerId: id
+          singerId: id,
+          singerPic: pic,
+          singerName: name
         }
       });
     }

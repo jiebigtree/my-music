@@ -1,12 +1,15 @@
 <template>
   <div class="wrapper" ref="wrapper" :class="{ nofooter: nofooter }">
-    <slot name="list">
-      <ul>
-        <li>
-          <slot name="list-info"> </slot>
-        </li>
-      </ul>
-    </slot>
+    <div>
+      <slot name="singer-list">
+        <ul>
+          <li>
+            <slot name="list-info"> </slot>
+          </li>
+        </ul>
+      </slot>
+      <slot name="list"></slot>
+    </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -17,11 +20,15 @@ export default {
     data: {
       type: Array,
       default: null,
-      scroll:''
     },
     nofooter:{
       type:Boolean,
       default:false
+    }
+  },
+  data(){
+    return{
+      scroll:''
     }
   },
   mounted() {
@@ -47,8 +54,8 @@ export default {
 .wrapper
   overflow: hidden;
   position: absolute;
-  top: 60px;
-  bottom 40px
+  top: 50px;
+  bottom 50px
   left: 0;
   right: 0;
   .list-one
@@ -68,7 +75,7 @@ export default {
 .nofooter
   overflow: hidden;
   position: absolute;
-  top: 60px;
+  top: 50px;
   left: 0;
   right: 0;
   bottom 0

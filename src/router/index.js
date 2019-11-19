@@ -65,7 +65,7 @@ const routes = [
       )
   },
   {
-    path: "/singer-detail/:singerId",
+    path: "/singer-detail/:singerId/:singerPic/:singerName",
     name: "singer-detail",
     meta: { index: 2 },
     component: () =>

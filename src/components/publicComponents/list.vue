@@ -12,7 +12,12 @@
                   >{{ one.detailOne }}-{{ one.detailTwo }}</span
                 >
               </div>
-              <div class="more">.</div>
+              <div class="more">
+                <svg-icon
+                  iconClass="cloud"
+                  style="width:20px;height:20px;"
+                ></svg-icon>
+              </div>
             </li>
           </ul>
         </slot>
@@ -28,25 +33,12 @@ export default {
       scroll
   },
   props: {
+
   },
   data(){
       return{
         listArray:[
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
-            {bigName:'比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'}
+            {bigName:'比较幸福比较幸福比较幸福比较幸福比较幸福比较幸福比较幸福',detailOne:'董又霖',detailTwo:'比较幸福'},
         ]
       }
   },
@@ -61,8 +53,36 @@ export default {
 .list-big-container
     .one-song
         height 50px
+        clear both
         .index,.name-container
             float left
+            margin-left 20px
+        .index
+            margin-left 10px
+            line-height 50px
+            font-size 18px
+            width 5%
+            text-align center
         .more
             float right
+            line-height 50px
+            width 10%
+            text-align center
+        .name-container
+            width 65%
+            .name-one
+                height 30px
+                line-height 30px
+                font-size 20px
+            .name-two
+                display inline-block
+                height 20px
+                line-height 20px
+                font-size 10px
+                color #666
+                width 100%
+            .name-two,.name-one
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
 </style>

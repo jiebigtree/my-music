@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- <div v-for="(one, index) in songArray" :key="index">
+    <div v-for="(one, index) in songArray" :key="index">
       {{ one.name }}
-    </div> -->
-    <list></list>
+    </div>
+    <!-- <list :songArray="songArray"> </list> -->
   </div>
 </template>
 <script>
@@ -36,7 +36,7 @@ export default {
     }
   },
   mounted() {
-    // this.getSingerMusic();
+    this.getSingerMusic();
   }
 };
 </script>
