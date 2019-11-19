@@ -5,19 +5,22 @@
     <router-view></router-view>
     <!-- </keep-alive> -->
     <!-- </transition> -->
+    <player></player>
     <tab v-if="showTab"></tab>
   </div>
 </template>
 <script>
 import axios from "axios";
 import Tab from "./components/tab/tab.vue";
+import player from "./views/finding/song-menu/playing";
 export default {
   name: "App",
   data() {
     return { transitionName: "" };
   },
   components: {
-    Tab
+    Tab,
+    player
   },
   created() {
     axios
