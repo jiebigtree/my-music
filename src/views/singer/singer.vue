@@ -16,30 +16,20 @@
         :key="index"
         class="list-one"
         slot="list-info"
+        @click="getSingerDetail(item.id)"
       >
         <img :src="item.picUrl" alt="" class="singer-pic" />
         <span class="singer-name">{{ item.name }}</span>
-        <button
-          @click="getSingerMV(item.id)"
-          style="float:right;width:50px;font-size:10px"
-        >
-          歌手MV
-        </button>
-        <button
-          @click="getSingerMusic(item.id)"
-          style="float:right;width:50px;font-size:10px"
-        >
-          歌手歌曲
-        </button>
       </div>
     </scroll>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
-import scroll from "../../components/publicComponents/scroll.vue";
+import scroll from "@/components/publicComponents/scroll.vue";
 import axios from "axios";
 export default {
+  name: "singer",
   components: {
     scroll
   },
@@ -69,18 +59,12 @@ export default {
       this.pageNum++;
       this.loadData();
     },
-    getSingerMV(id) {
-      console.log("歌手MV");
-      let url = "http://localhost:3000/artist/mv?id=" + id;
-      axios.get(url).then(res => {
-        console.log(res.data);
-      });
-    },
-    getSingerMusic(id) {
-      console.log("歌手单曲");
-      let url = "http://localhost:3000/artists?id=" + id;
-      axios.get(url).then(res => {
-        console.log(res.data);
+    getSingerDetail(id) {
+      this.$router.push({
+        name: "singer-detail",
+        params: {
+          singerId: id
+        }
       });
     }
   }

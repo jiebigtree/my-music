@@ -43,7 +43,10 @@ export default {
   },
   computed: {
     showTab() {
-      if (this.$route.name == "playing") {
+      if (
+        this.$route.name == "playing" ||
+        this.$route.name == "singer-detail"
+      ) {
         return false;
       } else {
         return true;

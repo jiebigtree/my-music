@@ -6,12 +6,14 @@ import "./registerServiceWorker";
 import Vant from "vant";
 import "vant/lib/index.css";
 import topHeader from "./components/publicComponents/topHeader.vue";
+import list from "./components/publicComponents/list.vue";
 import "@/icons";
 
 import "./assets/stylus/index.styl";
 
 Vue.use(Vant);
 Vue.component("topHeader", topHeader);
+Vue.component("list", list);
 
 Vue.config.productionTip = false;
 

@@ -32,9 +32,9 @@ export default {
           to: "/finding"
         },
         {
-          iconClass: "radio",
-          name: "视频",
-          to: "/radio"
+          iconClass: "singer",
+          name: "歌手",
+          to: "/singer"
         },
         {
           iconClass: "mine",

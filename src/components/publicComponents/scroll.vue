@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" ref="wrapper">
+  <div class="wrapper" ref="wrapper" :class="{ nofooter: nofooter }">
     <slot name="list">
       <ul>
         <li>
@@ -18,6 +18,10 @@ export default {
       type: Array,
       default: null,
       scroll:''
+    },
+    nofooter:{
+      type:Boolean,
+      default:false
     }
   },
   mounted() {
@@ -39,12 +43,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
 .wrapper
   overflow: hidden;
   position: absolute;
   top: 60px;
+  bottom 40px
   left: 0;
-  bottom: 50px;
   right: 0;
   .list-one
       border-bottom:1px solid rgba(200,200,200,.4)
@@ -60,4 +65,11 @@ export default {
           float left
           margin-left:20px
           line-height 60px
+.nofooter
+  overflow: hidden;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom 0
 </style>
