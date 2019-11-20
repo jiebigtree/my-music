@@ -70,26 +70,29 @@ export default {
   top 0
   left 0
   height 50px
-  background-color $bgc
+  // background-color $bgc
   z-index 9
   .slot-container
     height 100%
     display flex
     flex-direction row
-    justify-content space-around
+    justify-content space-between
     align-items center;
     .center-search
       input
         height 25px
         border-radius 15px
-        background-color $bgGray
+        background-color rgba(220,220,220,.3)
         font-size 12px
         width 200px
-        text-indent 10px
-        color $fontColor
+        text-align center
+        color rgba(220,220,220,.5)
       div
         text-align center
         width 200px
         font-weight 900
         color white
+    .left-icon,.right-icon
+      width 16%
+      text-align center
 </style>
