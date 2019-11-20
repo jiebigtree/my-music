@@ -56,7 +56,7 @@
         <div class="play-list-conatiner">
           <div class="play-list">
             <ul class="play-list-ul">
-              <li v-for="(one, index) in menuDetail.privileges" :key="index">
+              <li v-for="(one, index) in menuDetail.privileges" :key="one.id">
                 <play-list
                   :idnum="one.id"
                   :index="index"
@@ -107,15 +107,18 @@ export default {
       });
     },
     ...mapActions(["selectPlay"]),
-    select(song, item) {
-      console.log(song, item);
+    select(song, index) {
+      console.log(song);
+      console.log(index);
+      console.log(this.list[index].url);
       this.selectPlay({
-        list: song,
-        index: item
+        list: this.list,
+        index: index
       });
     },
-    songslist(url) {
-      this.list.push({ url: url });
+    songslist(url, i) {
+      this.list[i] = { url: url };
+      // this.list.push({ url: url });
       // console.log(this.list.length);
     }
   },

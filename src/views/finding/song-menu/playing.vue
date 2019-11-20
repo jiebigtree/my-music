@@ -13,9 +13,12 @@
         </div>
         <div slot="center-search">歌单</div>
       </topHeader>
-      <div style="width:100%;overflow:hidden">
+      <div style="width:100%;overflow:scroll">
         <!-- <span>{{ playList }}</span> -->
-        <audio :src="playList" autoplay controls></audio>
+        <!-- {{ playList }} -->
+        {{ currentSong }}
+        {{ currentIndex }}
+        <audio :src="currentSong.url" autoplay controls></audio>
       </div>
     </div>
   </div>
@@ -55,7 +58,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["fullScreen", "playList", "currentSong", "playList"])
+    ...mapGetters([
+      "fullScreen",
+      "playList",
+      "currentSong",
+      "playList",
+      "currentIndex"
+    ])
   },
   created() {
     // this.getSongUrl();
