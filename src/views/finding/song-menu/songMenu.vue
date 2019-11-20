@@ -8,6 +8,7 @@
         style="fill:white;width:20px;height:20px"
       ></svg-icon>
     </topHeader>
+
     <scroll>
       <div slot="list">
         <van-search
@@ -56,7 +57,12 @@
           <div class="play-list">
             <ul class="play-list-ul">
               <li v-for="(one, index) in menuDetail.privileges" :key="index">
-                <play-list :idnum="one.id" :index="index"></play-list>
+                <play-list
+                  :idnum="one.id"
+                  :index="index"
+                  @select="select"
+                  @songsList="songslist"
+                ></play-list>
               </li>
             </ul>
           </div>
@@ -70,6 +76,7 @@
 import scroll from "../../../components/publicComponents/scroll.vue";
 import axios from "axios";
 import playList from "./playList";
+import { mapActions } from "vuex";
 export default {
   name: "song-menu",
   data() {
@@ -80,7 +87,8 @@ export default {
       avatarUrl: "",
       creator: "",
       nickname: "",
-      description: ""
+      description: "",
+      list: []
     };
   },
   methods: {
@@ -97,6 +105,18 @@ export default {
         this.nickname = this.menuDetail.playlist.creator.nickname;
         this.description = this.menuDetail.playlist.description;
       });
+    },
+    ...mapActions(["selectPlay"]),
+    select(song, item) {
+      console.log(song, item);
+      this.selectPlay({
+        list: song,
+        index: item
+      });
+    },
+    songslist(url) {
+      this.list.push({ url: url });
+      // console.log(this.list.length);
     }
   },
   created() {

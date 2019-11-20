@@ -1,23 +1,30 @@
 <template>
-  <div class="playing" @click="alertaa">
-    <!-- <topHeader>
-      <div slot="center-search">歌单</div>
-      <svg-icon
-        iconClass="playing"
-        slot="right-icon"
-        style="fill:white;width:20px;height:20px"
-      ></svg-icon>
-    </topHeader>
-    <audio :src="playUrl" controls=""></audio>
+  <div class="playing" v-show="playList.length > 0">
+    <!-- <audio :src="playUrl" controls=""></audio>
     <img class="playing-bg" :src="songPic" alt="" />
     {{ playUrl }} -->
-    aa
+    <div class="full-screen" v-show="fullScreen">
+      <topHeader>
+        <div slot="left-icon" @click="baker">
+          <svg-icon
+            iconClass="back"
+            style="fill:white;width:20px;height:20px"
+          ></svg-icon>
+        </div>
+        <div slot="center-search">歌单</div>
+      </topHeader>
+      <div style="width:100%;overflow:hidden">
+        <!-- <span>{{ playList }}</span> -->
+        <audio :src="playList" autoplay controls></audio>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   name: "playing",
   data() {
@@ -37,9 +44,18 @@ export default {
     //     this.playUrl = res.data.data[0].url;
     //   });
     // },
-    alertaa() {
-      alert(1);
+    baker() {
+      this.setFullScreen(false);
+    },
+    ...mapMutations({
+      setFullScreen: "SET_FULL_SCREEN"
+    }),
+    open() {
+      this.setFullScreen(true);
     }
+  },
+  computed: {
+    ...mapGetters(["fullScreen", "playList", "currentSong", "playList"])
   },
   created() {
     // this.getSongUrl();

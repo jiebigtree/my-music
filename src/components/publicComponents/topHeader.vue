@@ -2,19 +2,28 @@
   <div class="top-header-conatiner">
     <div class="top-header">
       <div class="slot-container">
-        <div class="left-icon" @click="goBack">
+        <div class="left-icon">
           <slot name="left-icon">
-            <svg-icon
-              iconClass="back"
-              style="width:20px;height:20px"
-            ></svg-icon>
+            <div @click="goBack">
+              <svg-icon
+                iconClass="back"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
           </slot>
         </div>
         <div class="center-search">
           <slot name="center-search"> </slot>
         </div>
-        <div class="right-icon">
-          <slot name="right-icon"> </slot>
+        <div class="right-icon" @click="open">
+          <slot name="right-icon">
+            <div v-show="!fullScreen">
+              <svg-icon
+                iconClass="back"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+          </slot>
         </div>
       </div>
     </div>
@@ -23,6 +32,7 @@
 
 <script>
 // import axios from 'axios'
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "top-header",
   data() {
@@ -31,9 +41,20 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+      console.log("back");
+    },
+    ...mapMutations({
+      setFullScreen: "SET_FULL_SCREEN"
+    }),
+    open() {
+      console.log("open");
+      this.setFullScreen(true);
     }
   },
-  created() {}
+  created() {},
+  computed: {
+    ...mapGetters(["fullScreen"])
+  }
 };
 </script>
 

@@ -32,7 +32,8 @@ export default {
       listArray: {},
       singer: "",
       alubum: "",
-      alPicUrl: ""
+      alPicUrl: "",
+      songUrl: ""
     };
   },
   methods: {
@@ -49,17 +50,26 @@ export default {
     },
     oneMusic() {
       // this.$emit("toGetPic", this.alPicUrl);
-      this.$router.push({
-        name: "playing",
-        params: {
-          songId: this.idnum,
-          songPic: this.alPicUrl
-        }
-      });
+      // this.$router.push({
+      //   name: "playing",
+      //   params: {
+      //     songId: this.idnum,
+      //     songPic: this.alPicUrl
+      //   }
+      // });
+      this.$emit("select", this.songUrl, this.index);
     }
   },
   created() {
     this.getData();
+  },
+  mounted() {
+    let url = "http://localhost:3000/song/url?id=" + this.idnum;
+    axios.get(url).then(res => {
+      // console.log(res.data.data[0].url);
+      this.songUrl = res.data.data[0].url;
+      this.$emit("songsList", res.data.data[0].url);
+    });
   }
 };
 </script>
