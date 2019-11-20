@@ -12,13 +12,25 @@
           ></svg-icon>
         </div>
         <div slot="center-search">歌单</div>
+        <div slot="right-icon">
+          <svg-icon
+            iconClass="back"
+            style="fill:white;width:20px;height:20px"
+          ></svg-icon>
+        </div>
       </topHeader>
       <div style="width:100%;overflow:scroll">
         <!-- <span>{{ playList }}</span> -->
         <!-- {{ playList }} -->
-        {{ currentSong }}
-        {{ currentIndex }}
-        <audio :src="currentSong.url" autoplay controls></audio>
+        <!-- {{ currentSong }}
+        {{ currentIndex }} -->
+        <audio ref="audio" :src="currentSong.url"></audio>
+        <span>{{ currentSong.singer }}</span>
+        <span>{{ currentSong.songName }}</span>
+        <img :src="currentSong.pic" alt="" width="100%" />
+      </div>
+      <div class="bottom">
+        <button @click="togglePlaying">暂停</button>
       </div>
     </div>
   </div>
@@ -51,10 +63,14 @@ export default {
       this.setFullScreen(false);
     },
     ...mapMutations({
-      setFullScreen: "SET_FULL_SCREEN"
+      setFullScreen: "SET_FULL_SCREEN",
+      setPlayingState: "SET_PLAYING_STATE"
     }),
     open() {
       this.setFullScreen(true);
+    },
+    togglePlaying() {
+      this.setPlayingState(!this.playing);
     }
   },
   computed: {
@@ -63,11 +79,25 @@ export default {
       "playList",
       "currentSong",
       "playList",
-      "currentIndex"
+      "currentIndex",
+      "playing"
     ])
   },
   created() {
     // this.getSongUrl();
+  },
+  watch: {
+    currentSong() {
+      this.$nextTick(() => {
+        this.$refs.audio.play();
+      });
+    },
+    playing(newPlaying) {
+      const audio = this.$refs.audio;
+      this.$nextTick(() => {
+        newPlaying ? audio.play() : audio.pause();
+      });
+    }
   }
 };
 </script>

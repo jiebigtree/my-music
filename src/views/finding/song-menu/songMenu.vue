@@ -116,8 +116,14 @@ export default {
         index: index
       });
     },
-    songslist(url, i) {
-      this.list[i] = { url: url };
+    songslist(url, i, pic, singer, id, songName) {
+      this.list[i] = {
+        url: url,
+        pic: pic,
+        singer: singer,
+        id: id,
+        songName: songName
+      };
       // this.list.push({ url: url });
       // console.log(this.list.length);
     }

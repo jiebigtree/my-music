@@ -44,7 +44,7 @@ export default {
         // console.log(res.data.songs);
         this.listArray = res.data.songs[0];
         this.singer = res.data.songs[0].ar[0].name;
-        console.log(this.singer);
+        // console.log(this.singer);
         this.alubum = res.data.songs[0].al.name;
         this.alPicUrl = res.data.songs[0].al.picUrl;
       });
@@ -69,7 +69,15 @@ export default {
     axios.get(url).then(res => {
       // console.log(res.data.data[0].url);
       this.songUrl = res.data.data[0].url;
-      this.$emit("songsList", res.data.data[0].url, this.index);
+      this.$emit(
+        "songsList",
+        this.songUrl,
+        this.index,
+        this.alPicUrl,
+        this.singer,
+        this.idnum,
+        this.listArray.name
+      );
     });
   }
 };
