@@ -55,9 +55,54 @@
     bottom 0
     left 0
 .cd
-    width: 200px
-    height 200px
+    width: 280px
+    height 280px
     border-radius: 50%
+    box-shadow: 0 0 0 10px rgba(250,250,250,.2)
+    text-align: center
+    vertical-align: middle
+    position absolute
+    top: 50%
+    left 50%
+    margin-left: -140px
+    margin-top: -140px
+    img 
+        position: absolute
+        width: 70%
+        height 70%
+        left 50%
+        top: 50%
+        margin-left: -35%
+        margin-top: -35%
+        border-radius: 50%
     background: linear-gradient(black,#111,#222,#444,#444,#222,#111,black);
+    animation round 10s linear infinite
+    
+    @keyframes round{
+        from{transform:rotate(0deg)}
+        to{transform:rotate(360deg)}
+        }
 .full-screen
     background-color: black
+    .song-name,.singer-name
+        display: block
+        font-size: 10px
+        color: #ccc
+    .song-name
+        font-size: 18px
+        line-height: 32px
+        color: white
+    .bottom-icons
+        height 80px
+        line-height: 80px
+        display: flex
+        justify-content: space-around
+        align-items: center
+        .state
+            width: 55px
+            height 55px
+            border: 2px solid white
+            text-align: center
+            line-height: 55px
+            border-radius: 50%
+            

@@ -19,27 +19,72 @@
               style="fill:red;width:20px;height:20px"
             ></svg-icon>
           </div>
-          <div slot="center-search">{{ currentSong.songName }}</div>
-          <div slot="right-icon">
+          <div slot="center-search">
+            <div style="color:white">
+              <span class="song-name">{{ currentSong.songName }}</span>
+              <span class="singer-name">{{ currentSong.singer }}</span>
+            </div>
+          </div>
+          <div slot="right-icon" style="opacity:0">
             <svg-icon
               iconClass="back"
               style="fill:white;width:20px;height:20px"
             ></svg-icon>
           </div>
         </topHeader>
-        <div style="width:100%;overflow:scroll">
+        <div class="cd" :style="style">
+          <img :src="currentSong.pic" alt="" />
+          <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
+        </div>
+        <div style="width:100%;overflow:hidden">
           <!-- <span>{{ playList }}</span> -->
           <!-- {{ playList }} -->
           <!-- {{ currentSong }}
         {{ currentIndex }} -->
           <audio ref="audio" :src="currentSong.url"></audio>
-          <span>{{ currentSong.singer }}</span>
           <!-- <span>{{ currentSong.songName }}</span> -->
-          <div class="cd"></div>
+
           <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
         </div>
         <div class="bottom">
-          <button @click="togglePlaying">暂停</button>
+          <div class="bottom-icons">
+            <div class="sequence">
+              <svg-icon
+                iconClass="circle"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <div class="pre">
+              <svg-icon
+                iconClass="pre"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <div class="state" @click="togglePlaying" v-if="playing">
+              <svg-icon
+                iconClass="pause"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <div class="state" v-else @click="togglePlaying">
+              <svg-icon
+                iconClass="play"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <div class="next">
+              <svg-icon
+                iconClass="next"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+            <div class="list">
+              <svg-icon
+                iconClass="list"
+                style="width:20px;height:20px"
+              ></svg-icon>
+            </div>
+          </div>
         </div>
       </div>
     </transition>
@@ -54,21 +99,10 @@ export default {
   name: "playing",
   data() {
     return {
-      // songId: this.$route.params.songId,
-      // songPic: this.$route.params.songPic,
-      // playUrl: "",
-      // bgPic: `background-image: url('${this.playUrl}')`
+      roundState: true
     };
   },
   methods: {
-    // getSongUrl() {
-    //   let url =
-    //     "http://localhost:3000/song/url?id=" + this.$route.params.songId;
-    //   axios.get(url).then(res => {
-    //     // console.log(res.data.data[0].url);
-    //     this.playUrl = res.data.data[0].url;
-    //   });
-    // },
     baker() {
       this.setFullScreen(false);
     },
@@ -80,7 +114,9 @@ export default {
       this.setFullScreen(true);
     },
     togglePlaying() {
+      console.log(this.playing);
       this.setPlayingState(!this.playing);
+      this.roundState = !this.roundState;
     }
   },
   computed: {
@@ -91,11 +127,16 @@ export default {
       "playList",
       "currentIndex",
       "playing"
-    ])
+    ]),
+    style() {
+      if (this.roundState) {
+        return "animation-play-state:play";
+      } else {
+        return "animation-play-state:paused";
+      }
+    }
   },
-  created() {
-    // this.getSongUrl();
-  },
+  created() {},
   watch: {
     currentSong() {
       this.$nextTick(() => {
