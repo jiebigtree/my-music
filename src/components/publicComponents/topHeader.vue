@@ -70,7 +70,7 @@ export default {
   top 0
   left 0
   height 50px
-  // background-color $bgc
+  background-color rgba(0,0,0,0)
   z-index 9
   .slot-container
     height 100%
@@ -91,7 +91,7 @@ export default {
         text-align center
         width 200px
         font-weight 900
-        color white
+        color rgba(80,80,80,.8)
     .left-icon,.right-icon
       width 16%
       text-align center

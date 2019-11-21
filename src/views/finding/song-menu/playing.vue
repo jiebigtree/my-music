@@ -3,36 +3,46 @@
     <!-- <audio :src="playUrl" controls=""></audio>
     <img class="playing-bg" :src="songPic" alt="" />
     {{ playUrl }} -->
-    <div class="full-screen" v-show="fullScreen">
-      <topHeader>
-        <div slot="left-icon" @click="baker">
-          <svg-icon
-            iconClass="back"
-            style="fill:white;width:20px;height:20px"
-          ></svg-icon>
-        </div>
-        <div slot="center-search">歌单</div>
-        <div slot="right-icon">
-          <svg-icon
-            iconClass="back"
-            style="fill:white;width:20px;height:20px"
-          ></svg-icon>
-        </div>
-      </topHeader>
-      <div style="width:100%;overflow:scroll">
-        <!-- <span>{{ playList }}</span> -->
-        <!-- {{ playList }} -->
-        <!-- {{ currentSong }}
+    <transition name="slide-fade">
+      <div class="full-screen" v-show="fullScreen">
+        <div
+          class="bg-blur"
+          :style="{
+            backgroundImage: 'url(' + currentSong.pic + ')',
+            backgroundSize: 'cover'
+          }"
+        ></div>
+        <topHeader>
+          <div slot="left-icon" @click="baker">
+            <svg-icon
+              iconClass="back"
+              style="fill:red;width:20px;height:20px"
+            ></svg-icon>
+          </div>
+          <div slot="center-search">{{ currentSong.songName }}</div>
+          <div slot="right-icon">
+            <svg-icon
+              iconClass="back"
+              style="fill:white;width:20px;height:20px"
+            ></svg-icon>
+          </div>
+        </topHeader>
+        <div style="width:100%;overflow:scroll">
+          <!-- <span>{{ playList }}</span> -->
+          <!-- {{ playList }} -->
+          <!-- {{ currentSong }}
         {{ currentIndex }} -->
-        <audio ref="audio" :src="currentSong.url"></audio>
-        <span>{{ currentSong.singer }}</span>
-        <span>{{ currentSong.songName }}</span>
-        <img :src="currentSong.pic" alt="" width="100%" />
+          <audio ref="audio" :src="currentSong.url"></audio>
+          <span>{{ currentSong.singer }}</span>
+          <!-- <span>{{ currentSong.songName }}</span> -->
+          <div class="cd"></div>
+          <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
+        </div>
+        <div class="bottom">
+          <button @click="togglePlaying">暂停</button>
+        </div>
       </div>
-      <div class="bottom">
-        <button @click="togglePlaying">暂停</button>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 

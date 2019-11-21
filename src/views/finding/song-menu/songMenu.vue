@@ -9,7 +9,7 @@
       ></svg-icon>
     </topHeader>
 
-    <scroll>
+    <scroll :coverImgUrl="coverImgUrl">
       <div slot="list">
         <van-search
           placeholder="搜索歌单内歌曲"
@@ -17,11 +17,12 @@
           :show-action="false"
         />
         <div class="song-menu-header">
+          <div class="bg-blur"></div>
           <div class="menu-pic">
             <img :src="coverImgUrl" alt="" width="100%" />
           </div>
           <div class="menu-description">
-            <h1>{{ name }}</h1>
+            <h1 class="title">{{ name }}</h1>
             <div class="editor-infor">
               <img :src="avatarUrl" alt="" width="30px" class="head-pic" />
               <span class="editor">{{ nickname }}</span>
@@ -88,7 +89,8 @@ export default {
       creator: "",
       nickname: "",
       description: "",
-      list: []
+      list: [],
+      style: `background-image: url(${this.coverImgUrl})`
     };
   },
   methods: {

@@ -67,7 +67,7 @@ export default {
   left 0
   right 0
   // height 50px
-  background-color rgba(220,220,220,.4)
+  background-color rgba(220,220,220,1)
   color $fontColor
   .tab-container
     display flex
