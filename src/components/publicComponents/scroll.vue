@@ -8,6 +8,14 @@
       }"
       v-if="coverImgUrl"
     ></div>
+    <div
+      class="bg-blur"
+      :style="{
+        backgroundImage: 'url(' + pic + ')',
+        backgroundSize: 'cover'
+      }"
+      v-if="pic"
+    ></div>
     <div class="wrapper" ref="wrapper" :class="{ nofooter: nofooter }">
       <div>
         <slot name="singer-list">
@@ -36,6 +44,10 @@ export default {
       default:false
     },
     coverImgUrl:{
+      type:String,
+      default:''
+    },
+    pic:{
       type:String,
       default:''
     }

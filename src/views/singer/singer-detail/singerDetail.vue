@@ -10,7 +10,7 @@
       </div>
     </topHeader>
 
-    <scroll :nofooter="true">
+    <scroll :nofooter="true" :pic="pic">
       <div slot="list">
         <div :style="style">
           <div class="pic-mask">

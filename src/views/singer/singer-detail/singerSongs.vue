@@ -3,8 +3,18 @@
     <div>
       <ul class="items">
         <li v-for="(one, index) in songArray" :key="index" class="one-item">
-          <span class="index">{{ index + 1 }}</span>
-          <span class="name">{{ one.name }}</span>
+          <!-- <span class="index">{{ index + 1 }}</span>
+          <span class="name">{{ one.name }}</span> -->
+          <song
+            :id="one.id"
+            :index="index"
+            :name="one.name"
+            @songslist="songslist"
+            @choose="choose"
+            :alName="one.al.name"
+            :picUrl="one.al.picUrl"
+            :singerName="one.ar[0].name"
+          ></song>
         </li>
       </ul>
     </div>
@@ -13,10 +23,14 @@
 <script>
 // import scroll from "@/components/publicComponents/scroll.vue";
 import axios from "axios";
+import song from "./one-song";
+import { mapActions } from "vuex";
+
 export default {
   name: "singer-songs",
   components: {
     // scroll
+    song
   },
   props: {
     id: {
@@ -26,17 +40,36 @@ export default {
   },
   data() {
     return {
-      songArray: []
+      songArray: [],
+      list: []
     };
   },
   methods: {
     getSingerMusic() {
-      console.log("歌手单曲");
+      // console.log("歌手单曲");
       let url = "http://localhost:3000/artists?id=" + this.id;
       axios.get(url).then(res => {
         console.log(res.data.hotSongs);
         this.songArray = res.data.hotSongs;
       });
+    },
+    ...mapActions(["selectPlay"]),
+    choose(song, index) {
+      // console.log(this.list[index].url);
+      this.selectPlay({
+        list: this.list,
+        index: index
+      });
+    },
+    songslist(url, i, songName, id, pic, singer) {
+      // console.log(url);
+      this.list[i] = {
+        url: url,
+        songName: songName,
+        id: id,
+        pic: pic,
+        singer: singer
+      };
     }
   },
   mounted() {

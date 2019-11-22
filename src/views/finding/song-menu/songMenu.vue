@@ -26,33 +26,9 @@
             <div class="editor-infor">
               <img :src="avatarUrl" alt="" width="30px" class="head-pic" />
               <span class="editor">{{ nickname }}</span>
-              <!-- <svg-icon iconClass="menu" style="width:15px;height:15px"></svg-icon> -->
             </div>
             <span class="list-description">{{ description }}</span>
           </div>
-        </div>
-        <div class="operate">
-          <!-- <div>
-            <svg-icon
-              iconClass="menu"
-              style="width:20px;height:20px"
-            ></svg-icon>
-            <span>206</span>
-          </div>
-          <div>
-            <svg-icon
-              iconClass="menu"
-              style="width:20px;height:20px"
-            ></svg-icon>
-            <span>206</span>
-          </div>
-          <div>
-            <svg-icon
-              iconClass="menu"
-              style="fill:white;width:20px;height:20px"
-            ></svg-icon>
-            <span>206</span>
-          </div> -->
         </div>
         <div class="play-list-conatiner">
           <div class="play-list">
@@ -110,8 +86,6 @@ export default {
     },
     ...mapActions(["selectPlay"]),
     select(song, index) {
-      console.log(song);
-      console.log(index);
       console.log(this.list[index].url);
       this.selectPlay({
         list: this.list,
@@ -126,8 +100,6 @@ export default {
         id: id,
         songName: songName
       };
-      // this.list.push({ url: url });
-      // console.log(this.list.length);
     }
   },
   created() {

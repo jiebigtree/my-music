@@ -1,7 +1,8 @@
 <template>
-  <div class="one-play-list-conatiner" @click="oneMusic">
+  <div class="one-play-list-conatiner" @click="oneMusic(index)">
     <div class="float-left">
-      {{ index + 1 }}
+      <div>{{ index + 1 }}</div>
+      <!-- <span class="index"></span> -->
     </div>
     <div class="float-center">
       <div class="music-name">{{ listArray.name }}</div>
@@ -49,15 +50,8 @@ export default {
         this.alPicUrl = res.data.songs[0].al.picUrl;
       });
     },
-    oneMusic() {
-      // this.$emit("toGetPic", this.alPicUrl);
-      // this.$router.push({
-      //   name: "playing",
-      //   params: {
-      //     songId: this.idnum,
-      //     songPic: this.alPicUrl
-      //   }
-      // });
+    oneMusic(i) {
+      console.log(i);
       this.$emit("select", this.songUrl, this.index);
     }
   },
@@ -92,6 +86,8 @@ export default {
     line-height 50px
     width 10%
     text-align center
+    .index
+      color #444
   .float-center
     display flex
     flex-direction column
@@ -103,9 +99,11 @@ export default {
       overflow: hidden;
       text-overflow:ellipsis;
       white-space: nowrap;
+      color #444
     .singer-name
-      font-size 12px
+      font-size 10px
       overflow: hidden;
       text-overflow:ellipsis;
       white-space: nowrap;
+      color #999
 </style>
