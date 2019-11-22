@@ -2,35 +2,52 @@
   <div class="bigest-container">
     <topHeader>
       <div slot="center-search">热门歌手</div>
-      <div>
+      <div slot="right-icon">
         <svg-icon
           iconClass="playing"
           style="fill:white;width:20px;height:20px"
         ></svg-icon>
       </div>
     </topHeader>
-
-    <scroll :nofooter="true" :pic="pic">
+    <div class="tab fixCls" v-show="fixCls">
+      <div
+        @click="changeView('Song', true)"
+        :class="{ isCurrent: isCurrent }"
+        class="one-tab"
+      >
+        单曲
+      </div>
+      <div
+        @click="changeView('MV', false)"
+        :class="{ isCurrent: !isCurrent }"
+        class="one-tab"
+      >
+        MV
+      </div>
+    </div>
+    <scroll :nofooter="true" :pic="pic" :tabFix="tabFix" @fixer="fixer">
       <div slot="list">
         <div :style="style">
           <div class="pic-mask">
             <h1>{{ name }}</h1>
           </div>
         </div>
-        <div class="tab">
-          <div
-            @click="changeView('Song', true)"
-            :class="{ isCurrent: isCurrent }"
-            class="one-tab"
-          >
-            单曲
-          </div>
-          <div
-            @click="changeView('MV', false)"
-            :class="{ isCurrent: !isCurrent }"
-            class="one-tab"
-          >
-            MV
+        <div>
+          <div class="tab">
+            <div
+              @click="changeView('Song', true)"
+              :class="{ isCurrent: isCurrent }"
+              class="one-tab"
+            >
+              单曲
+            </div>
+            <div
+              @click="changeView('MV', false)"
+              :class="{ isCurrent: !isCurrent }"
+              class="one-tab"
+            >
+              MV
+            </div>
           </div>
         </div>
         <component :is="currentView" :id="id"></component>
@@ -57,7 +74,9 @@ export default {
       name: this.$route.params.singerName,
       currentView: "singerSong",
       style: `background-image:url(${this.$route.params.singerPic});width:100%;height:200px;background-position:center center;background-size:100%`,
-      isCurrent: true
+      isCurrent: true,
+      tabFix: true,
+      fixCls: false
     };
   },
   methods: {
@@ -65,6 +84,10 @@ export default {
       console.log(data);
       this.currentView = "singer" + data; //动态地改变currentView的值就可以动态挂载组件了。
       this.isCurrent = bool;
+    },
+    fixer(i) {
+      console.log(i);
+      this.fixCls = i;
     }
   },
   created() {}
@@ -95,4 +118,10 @@ export default {
     text-align center
   .isCurrent
     background-color rgba(0,0,0,.3)
+.fixCls
+  position fixed!important
+  top 50px;
+  left 0
+  z-index 10
+  width 100%
 </style>

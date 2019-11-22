@@ -37,7 +37,7 @@ export default {
       data: [],
       pulldown: true,
       pageNum: 20,
-      loading: false
+      loading: true
     };
   },
   created() {

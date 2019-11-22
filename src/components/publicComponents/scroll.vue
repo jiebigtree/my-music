@@ -26,7 +26,6 @@
           </ul>
         </slot>
         <slot name="list"></slot>
-        <div v-show="loading">aa</div>
       </div>
     </div>
   </div>
@@ -54,6 +53,10 @@ export default {
       default:''
     },
     loading:{
+      type:Boolean,
+      default:false
+    },
+    tabFix:{
       type:Boolean,
       default:false
     }
@@ -108,17 +111,27 @@ setTimeout(()=>{
           }else {
               this.isScroll = false;
           }
-          if(this.scrollY >= jz){
-
-let that = this
-        if(this.timeoutflag != null){
-          clearTimeout(this.timeoutflag);
-        }
-          this.timeoutflag=setTimeout(function(){
-            that.$emit('load')
-            console.log("jz");//此处是一个会请求远程的ajax 异步操作;
-          },200);
+          if(this.loading){
+            if(this.scrollY >= jz){
+              let that = this
+              if(this.timeoutflag != null){
+                clearTimeout(this.timeoutflag);
+              }
+                this.timeoutflag=setTimeout(function(){
+                  console.log('loading')
+                  that.$emit('load')
+                },200);
           }
+          }
+          if(this.tabFix){
+            // console.log(this.scrollY)
+            if(this.scrollY >= 200){
+              this.$emit('fixer',true)
+            }else{
+              this.$emit('fixer',false)
+            }
+          }
+
           })
     }
   },
