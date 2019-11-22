@@ -114,7 +114,6 @@ export default {
       this.setFullScreen(true);
     },
     togglePlaying() {
-      console.log(this.playing);
       this.setPlayingState(!this.playing);
       this.roundState = !this.roundState;
     }
@@ -147,6 +146,7 @@ export default {
       const audio = this.$refs.audio;
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
+        // console.log(newPlaying);
       });
     }
   }
