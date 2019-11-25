@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-container" ref="progressBar">
+  <div class="progress-container" ref="progressBar" @click="progressClick">
         <div class="progress" ref="progress"></div>
         <div class="dot" ref="progressBtn"
         @touchstart.prevent="progressTouchStart"
@@ -49,6 +49,10 @@ export default {
       },
       progressTouchEnd(e){
           this.touch.initiated = false
+          this.changePercent()
+      },
+      progressClick(e){
+          this._offset(e.offsetX)
           this.changePercent()
       },
       _offset(offsetWidth){

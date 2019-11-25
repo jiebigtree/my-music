@@ -37,17 +37,11 @@
           <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
         </div>
         <div style="width:100%;overflow:hidden">
-          <!-- <span>{{ playList }}</span> -->
-          <!-- {{ playList }} -->
-          <!-- {{ currentSong }}
-        {{ currentIndex }} -->
           <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
-          <!-- <span>{{ currentSong.songName }}</span> -->
-
-          <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
         </div>
         <div class="bottom">
           <div class="play-time-container">
+            <div>{{lyrics}}</div>
             <div class="left-time">{{format(currenTime)}}</div>
             <div class="progress"><progresser :percent="percent" @percentChange='percentChanger'></progresser></div>
             <div class="right-time">{{format(duration)}}</div>
@@ -97,7 +91,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
 import progresser from '@/components/publicComponents/progress.vue'
 
@@ -112,7 +106,8 @@ export default {
       playingState:false,
       musicOk:false,
       currenTime:0,
-      duration:0
+      duration:0,
+      lyrics:''
     };
   },
   methods: {
@@ -210,7 +205,13 @@ export default {
       return this.currenTime / this.duration
     }
   },
-  created() {},
+  // mounted() {
+  //   console.log(this.currentSong.id)
+  //     let url ="http://localhost:3000/lyric?id=" + this.currentSong.id;
+  //     axios.get(url).then(res => {
+  //       console.log(res.data);
+  //     });
+  // },
   watch: {
     currentSong() {
       this.$nextTick(() => {

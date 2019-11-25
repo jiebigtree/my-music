@@ -91,7 +91,6 @@ export default {
           // const tops = this.$refs.wrapper.offsetTop;
           // 使用abs绝对值（否则 pos.y拿到值是负数）
           this.scrollY = Math.abs(Math.round(pos.y));
-          //判断滑动距离大于"商品介绍"元素时, 吸顶title,否则隐藏
           // if(this.scrollY >= tops) {
           //     this.isScroll = true;
           // }else {
