@@ -61,7 +61,7 @@ export default {
   mounted() {
     let url = "http://localhost:3000/song/url?id=" + this.idnum;
     axios.get(url).then(res => {
-      console.log(res.data.data[0]);
+      // console.log(res.data.data[0]);
       this.songUrl = res.data.data[0].url;
       this.$emit(
         "songsList",

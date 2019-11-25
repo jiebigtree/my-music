@@ -47,8 +47,11 @@
           <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
         </div>
         <div class="bottom">
-          <div class="play-time-container">{{format(currenTime)}}{{format(duration)}}</div>
-          <div></div>
+          <div class="play-time-container">
+            <div class="left-time">{{format(currenTime)}}</div>
+            <div class="progress"><progresser :percent="percent"></progresser></div>
+            <div class="right-time">{{format(duration)}}</div>
+          </div>
           <div class="bottom-icons">
             <div class="sequence">
               <svg-icon
@@ -96,9 +99,13 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
+import progresser from '@/components/publicComponents/progress.vue'
 
 export default {
   name: "playing",
+  components:{
+    progresser
+  },
   data() {
     return {
       roundState: true,
@@ -189,6 +196,9 @@ export default {
       } else {
         return "animation-play-state:paused";
       }
+    },
+    percent(){
+      return this.currenTime / this.duration
     }
   },
   created() {},
