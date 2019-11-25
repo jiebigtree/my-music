@@ -70,25 +70,11 @@ export default {
     }
   },
   mounted() {
-//     this.$nextTick(() => {
-//     //   this.scroll = new BScroll(this.$refs.wrapper,{click:true});
-//       this.scroll = new BScroll(this.$refs.wrapper,{
-//         scrollY: true,
-//         click: true,
-//         probeType:3
-// })
-//     });
-setTimeout(()=>{
-  this.initScroll()
-},600)
-    // this.$nextTick(() => {
-    //   this.initScroll()
-    // })
+    setTimeout(()=>{
+      this.initScroll()
+    },600)
   },
   methods: {
-      conso(i){
-          console.log(i)
-      },
       initScroll(){
         this.listScroll = new BScroll(this.$refs.wrapper,{
           probeType: 3,
@@ -100,25 +86,26 @@ setTimeout(()=>{
         });
         this.listScroll.on('scroll', (pos) => {
           // console.log(this.scrollY)
-          var jz = this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight
+          
           // console.log(this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight )
-          var tops = this.$refs.wrapper.offsetTop;
+          // const tops = this.$refs.wrapper.offsetTop;
           // 使用abs绝对值（否则 pos.y拿到值是负数）
           this.scrollY = Math.abs(Math.round(pos.y));
           //判断滑动距离大于"商品介绍"元素时, 吸顶title,否则隐藏
-          if(this.scrollY >= tops) {
-              this.isScroll = true;
-          }else {
-              this.isScroll = false;
-          }
+          // if(this.scrollY >= tops) {
+          //     this.isScroll = true;
+          // }else {
+          //     this.isScroll = false;
+          // }
           if(this.loading){
+            const jz = this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight
             if(this.scrollY >= jz){
               let that = this
               if(this.timeoutflag != null){
                 clearTimeout(this.timeoutflag);
               }
                 this.timeoutflag=setTimeout(function(){
-                  console.log('loading')
+                  // console.log('loading')
                   that.$emit('load')
                 },200);
           }
