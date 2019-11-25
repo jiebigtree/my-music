@@ -41,7 +41,7 @@
           <!-- {{ playList }} -->
           <!-- {{ currentSong }}
         {{ currentIndex }} -->
-          <audio ref="audio" :src="currentSong.url"></audio>
+          <audio ref="audio" :src="currentSong.url" @canplay="ready"></audio>
           <!-- <span>{{ currentSong.songName }}</span> -->
 
           <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
@@ -54,13 +54,13 @@
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
-            <div class="pre">
+            <div class="pre" @click="pre">
               <svg-icon
                 iconClass="pre"
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
-            <div class="state" @click="togglePlaying" v-if="playing">
+            <div class="state" @click="togglePlaying" v-if="playingState">
               <svg-icon
                 iconClass="pause"
                 style="width:20px;height:20px"
@@ -72,7 +72,7 @@
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
-            <div class="next">
+            <div class="next" @click="next">
               <svg-icon
                 iconClass="next"
                 style="width:20px;height:20px"
@@ -99,7 +99,9 @@ export default {
   name: "playing",
   data() {
     return {
-      roundState: true
+      roundState: true,
+      playingState:false,
+      musicOk:false
     };
   },
   methods: {
@@ -108,7 +110,8 @@ export default {
     },
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
-      setPlayingState: "SET_PLAYING_STATE"
+      setPlayingState: "SET_PLAYING_STATE",
+      setCurrentIndex:'SET_CURRENT_INDEX'
     }),
     open() {
       this.setFullScreen(true);
@@ -116,6 +119,37 @@ export default {
     togglePlaying() {
       this.setPlayingState(!this.playing);
       this.roundState = !this.roundState;
+    },
+    pre(){
+      if(!this.musicOk){
+        return
+      }
+      let index = this.currentIndex - 1
+      if(index === -1){
+        index = this.playList.length - 1
+      }
+      this.setCurrentIndex(index)
+      if(!this.playing){
+        this.playingState = true
+      }
+      this.musicOk = false
+    },
+    next(){
+      if(!this.musicOk){
+        return
+      }
+      let index = this.currentIndex + 1
+      if(index === this.playList.length){
+        index = 0
+      }
+      this.setCurrentIndex(index)
+      if(!this.playing){
+        this.playingState = true
+      }
+      this.musicOk = false
+    },
+    ready(){
+      this.musicOk = true
     }
   },
   computed: {
@@ -125,7 +159,7 @@ export default {
       "currentSong",
       "playList",
       "currentIndex",
-      "playing"
+      "playing",
     ]),
     style() {
       if (this.roundState) {
@@ -147,6 +181,8 @@ export default {
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
         // console.log(newPlaying);
+        this.playingState = newPlaying
+        this.roundState = newPlaying
       });
     }
   }
