@@ -41,12 +41,14 @@
           <!-- {{ playList }} -->
           <!-- {{ currentSong }}
         {{ currentIndex }} -->
-          <audio ref="audio" :src="currentSong.url" @canplay="ready"></audio>
+          <audio ref="audio" :src="currentSong.url" @canplay="ready" @timeupdate="updateTime"></audio>
           <!-- <span>{{ currentSong.songName }}</span> -->
 
           <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
         </div>
         <div class="bottom">
+          <div class="play-time-container">{{format(currenTime)}}{{format(duration)}}</div>
+          <div></div>
           <div class="bottom-icons">
             <div class="sequence">
               <svg-icon
@@ -101,7 +103,9 @@ export default {
     return {
       roundState: true,
       playingState:false,
-      musicOk:false
+      musicOk:false,
+      currenTime:0,
+      duration:0
     };
   },
   methods: {
@@ -150,6 +154,24 @@ export default {
     },
     ready(){
       this.musicOk = true
+    },
+    updateTime(e){
+      this.duration = e.target.duration
+      this.currenTime = e.target.currentTime
+    },
+    _pad(num,n=2){
+      let len = num.toString().length
+      while(len < n){
+        num = '0' + num
+        len ++
+      }
+      return num
+    },
+    format(interval){
+      interval = interval | 0
+      const minute = this._pad(interval / 60 | 0)
+      const second = this._pad(interval % 60)
+      return `${minute}:${second}`
     }
   },
   computed: {
