@@ -41,7 +41,7 @@
           <!-- {{ playList }} -->
           <!-- {{ currentSong }}
         {{ currentIndex }} -->
-          <audio ref="audio" :src="currentSong.url" @canplay="ready" @timeupdate="updateTime"></audio>
+          <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
           <!-- <span>{{ currentSong.songName }}</span> -->
 
           <!-- <img :src="currentSong.pic" alt="" width="100%" /> -->
@@ -49,7 +49,7 @@
         <div class="bottom">
           <div class="play-time-container">
             <div class="left-time">{{format(currenTime)}}</div>
-            <div class="progress"><progresser :percent="percent"></progresser></div>
+            <div class="progress"><progresser :percent="percent" @percentChange='percentChanger'></progresser></div>
             <div class="right-time">{{format(duration)}}</div>
           </div>
           <div class="bottom-icons">
@@ -159,6 +159,9 @@ export default {
       }
       this.musicOk = false
     },
+    endMusic(){
+      this.next()
+    },
     ready(){
       this.musicOk = true
     },
@@ -179,6 +182,12 @@ export default {
       const minute = this._pad(interval / 60 | 0)
       const second = this._pad(interval % 60)
       return `${minute}:${second}`
+    },
+    percentChanger(percent){
+      this.$refs.audio.currentTime = this.duration * percent
+      if(!this.playing){
+        this.togglePlaying()
+      }
     }
   },
   computed: {

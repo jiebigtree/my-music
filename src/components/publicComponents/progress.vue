@@ -1,7 +1,11 @@
 <template>
   <div class="progress-container" ref="progressBar">
         <div class="progress" ref="progress"></div>
-        <div class="dot" ref="progressBtn"></div>
+        <div class="dot" ref="progressBtn"
+        @touchstart.prevent="progressTouchStart"
+        @touchmove.prevent="progressTouchMove"
+        @touchend="progressTouchEnd"
+        ></div>
     </div>
 </template>
 
@@ -17,11 +21,10 @@ export default {
   },
   watch:{
       percent(newPercent){
-          if(newPercent >= 0){
+          if(newPercent >= 0 && !this.touch.initiated){
               const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
               const offsetWidth = newPercent * barWidth
-              this.$refs.progress.style.width = `${offsetWidth}px`
-              this.$refs.progressBtn.style.left =  `${offsetWidth}px`
+              this._offset(offsetWidth)
           }
       }
   },
@@ -30,8 +33,37 @@ export default {
 
     };
   },
-  methods: {},
-  created() {}
+  methods: {
+      progressTouchStart(e){
+          this.touch.initiated = true
+          this.touch.startX = e.touches[0].pageX
+          this.touch.left = this.$refs.progress.clientWidth
+      },
+      progressTouchMove(e){
+          if(!this.touch.initiated){
+              return
+          }
+          const delaX = e.touches[0].pageX - this.touch.startX
+          const offsetWidth = Math.min(this.$refs.progressBar.clientWidth - progressBtnWidth,Math.max(0,this.touch.left + delaX))
+          this._offset(offsetWidth)
+      },
+      progressTouchEnd(e){
+          this.touch.initiated = false
+          this.changePercent()
+      },
+      _offset(offsetWidth){
+           this.$refs.progress.style.width = `${offsetWidth}px`
+           this.$refs.progressBtn.style.left =  `${offsetWidth}px`
+      },
+      changePercent(){
+          const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
+          const percent = this.$refs.progress.clientWidth / barWidth
+          this.$emit('percentChange',percent)
+      }
+  },
+  created() {
+      this.touch = {}
+  }
 };
 </script>
 
