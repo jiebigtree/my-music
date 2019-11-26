@@ -38,7 +38,15 @@
           <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
         </div>
         <div class="lyrics" @click="toggleCenter" v-show="showLyrics">
-          {{ lyrics }}
+          
+            <div class="lyric-container">
+            <p ref="lyricLine" class="text" v-for="(line,index) in lyrArr" :key="index" >
+              {{ line.txt }}
+            </p>
+              <!-- {{currentLyric.lines}} -->
+            <!-- {{currentLyric}} -->
+          </div>
+          
         </div>
         <div style="width:100%;overflow:hidden">
           <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
@@ -76,7 +84,7 @@
             </div>
             <div class="next" @click="next">
               <svg-icon
-                iconClass="next"
+                iconClass="next" 
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
@@ -97,6 +105,8 @@
 import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
 import progresser from '@/components/publicComponents/progress.vue'
+import Lyric from 'lyric-parser'
+import BScroll from 'better-scroll'
 
 export default {
   name: "playing",
@@ -111,7 +121,8 @@ export default {
       currenTime:0,
       duration:0,
       lyrics:'',
-      showLyrics:true
+      showLyrics:true,
+      lyrArr:[]
     };
   },
   methods: {
@@ -212,13 +223,6 @@ export default {
       return this.currenTime / this.duration
     }
   },
-  // mounted() {
-  //   console.log(this.currentSong.id)
-  //     let url ="http://localhost:3000/lyric?id=" + this.currentSong.id;
-  //     axios.get(url).then(res => {
-  //       console.log(res.data);
-  //     });
-  // },
   watch: {
     currentSong() {
       this.$nextTick(() => {
@@ -228,8 +232,13 @@ export default {
       axios.get(url).then(res => {
         // console.log(res.data.lrc.lyric);
         this.lyrics = res.data.lrc.lyric
-        console.log(this.lyrics)
-      });
+        const arr1 = this.lyrics.split("[").slice(1)
+        console.log(arr1)
+        for(let i=0;i<arr1.length;i++){
+          this.lyrArr[i] = {time:arr1[i].slice(0,5),txt:arr1[i].slice(10)}
+        }
+          // console.log(this.lyrArr)
+      })
     },
     playing(newPlaying) {
       const audio = this.$refs.audio;
