@@ -32,16 +32,19 @@
             ></svg-icon>
           </div>
         </topHeader>
-        <div class="cd" :style="style">
+
+        <div class="cd" :style="style"  @click="toggleCenter" v-show="!showLyrics">
           <img :src="currentSong.pic" alt="" />
           <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
+        </div>
+        <div class="lyrics" @click="toggleCenter" v-show="showLyrics">
+          {{ lyrics }}
         </div>
         <div style="width:100%;overflow:hidden">
           <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
         </div>
         <div class="bottom">
           <div class="play-time-container">
-            <div>{{lyrics}}</div>
             <div class="left-time">{{format(currenTime)}}</div>
             <div class="progress"><progresser :percent="percent" @percentChange='percentChanger'></progresser></div>
             <div class="right-time">{{format(duration)}}</div>
@@ -107,7 +110,8 @@ export default {
       musicOk:false,
       currenTime:0,
       duration:0,
-      lyrics:''
+      lyrics:'',
+      showLyrics:true
     };
   },
   methods: {
@@ -183,6 +187,9 @@ export default {
       if(!this.playing){
         this.togglePlaying()
       }
+    },
+    toggleCenter(){
+      this.showLyrics = !this.showLyrics
     }
   },
   computed: {
@@ -216,6 +223,12 @@ export default {
     currentSong() {
       this.$nextTick(() => {
         this.$refs.audio.play();
+      });
+      let url ="http://localhost:3000/lyric?id=" + this.currentSong.id;
+      axios.get(url).then(res => {
+        // console.log(res.data.lrc.lyric);
+        this.lyrics = res.data.lrc.lyric
+        console.log(this.lyrics)
       });
     },
     playing(newPlaying) {
