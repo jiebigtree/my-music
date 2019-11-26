@@ -122,7 +122,8 @@ export default {
       scroll:'',
       scrollY:'',
       isScroll:false,
-      timeoutflag : null
+      timeoutflag : null,
+      scrollTop:0
     };
   },
   mounted() {
@@ -142,6 +143,7 @@ export default {
         });
         this.listScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y));
+          // console.log(this.scrollY)
           })
     },
     baker() {
@@ -243,6 +245,7 @@ export default {
     lineNum(){
       return function(index){
         if(parseInt(index.replace(":","")) <= parseInt(this.format(this.currenTime).replace(":",""))){
+          this.scrollTop += 35
           return true
         }
       }
