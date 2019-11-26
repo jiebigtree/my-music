@@ -37,16 +37,12 @@
           <img :src="currentSong.pic" alt="" />
           <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
         </div>
-        <div class="lyrics" @click="toggleCenter" v-show="showLyrics">
-          
-            <div class="lyric-container">
-            <p ref="lyricLine" class="text" v-for="(line,index) in lyrArr" :key="index" >
+        <div class="wrapper" @click="toggleCenter" v-show="showLyrics" ref="wrapper">
+          <div class="lyric-container" ref="content">
+            <p ref="lyricLine" class="text" v-for="(line,index) in lyrArr" :key="index" :class="{'current' : lineNum(line.time) }">
               {{ line.txt }}
             </p>
-              <!-- {{currentLyric.lines}} -->
-            <!-- {{currentLyric}} -->
           </div>
-          
         </div>
         <div style="width:100%;overflow:hidden">
           <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
@@ -122,10 +118,32 @@ export default {
       duration:0,
       lyrics:'',
       showLyrics:true,
-      lyrArr:[]
+      lyrArr:[],
+      scroll:'',
+      scrollY:'',
+      isScroll:false,
+      timeoutflag : null
     };
   },
+  mounted() {
+    setTimeout(()=>{
+      this.initScroll()
+    },600)
+  },
   methods: {
+    initScroll(){
+        this.listScroll = new BScroll(this.$refs.wrapper,{
+          probeType: 3,
+          scrollY: true,
+          click: true,
+          useTransition:false,  // 防止iphone微信滑动卡顿
+          bounce:true,
+          momentumLimitDistance: 5
+        });
+        this.listScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y));
+          })
+    },
     baker() {
       this.setFullScreen(false);
     },
@@ -221,6 +239,13 @@ export default {
     },
     percent(){
       return this.currenTime / this.duration
+    },
+    lineNum(){
+      return function(index){
+        if(parseInt(index.replace(":","")) <= parseInt(this.format(this.currenTime).replace(":",""))){
+          return true
+        }
+      }
     }
   },
   watch: {
@@ -233,11 +258,10 @@ export default {
         // console.log(res.data.lrc.lyric);
         this.lyrics = res.data.lrc.lyric
         const arr1 = this.lyrics.split("[").slice(1)
-        console.log(arr1)
+        // console.log(arr1)
         for(let i=0;i<arr1.length;i++){
           this.lyrArr[i] = {time:arr1[i].slice(0,5),txt:arr1[i].slice(10)}
         }
-          // console.log(this.lyrArr)
       })
     },
     playing(newPlaying) {
