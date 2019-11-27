@@ -113,7 +113,7 @@ export default {
           }
           }
           if(this.tabFix){
-            if(this.scrollFalse>0&&this.scrollFalse<20){
+            if(this.scrollFalse>0&&this.scrollFalse<10){
               this.$emit('big',this.scrollFalse)
             }else{
               if(this.scrollY >= 200){

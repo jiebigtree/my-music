@@ -139,7 +139,7 @@ export default {
       currenTime: 0,
       duration: 0,
       lyrics: "",
-      showLyrics: true,
+      showLyrics: false,
       lyrArr: [],
       scroll: "",
       scrollY: "",
@@ -267,18 +267,10 @@ export default {
     percent() {
       return this.currenTime / this.duration;
     }
-    // lineNum() {
-    //   // return function(index, time) {
-    //   //   if (time == this.format(this.currenTime)) {
-    //   //     // this.num = index
-    //   //     console.log(index);
-    //   //     return index;
-    //   //   }
-    //   // };
-    // }
   },
   watch: {
     currentSong() {
+      this.showLyrics = false;
       this.$nextTick(() => {
         this.$refs.audio.play();
       });

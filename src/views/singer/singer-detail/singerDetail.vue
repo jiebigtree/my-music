@@ -98,7 +98,7 @@ export default {
       this.fixCls = i;
     },
     big(i) {
-      console.log(i / 10);
+      // console.log(i / 10);
       this.$refs.bigPic.style.transform = `scale(${1 + i / 15})`;
       this.$refs.bigPic.style.overflow = "hidden";
     }
