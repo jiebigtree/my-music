@@ -66,7 +66,8 @@ export default {
       scroll:'',
       scrollY:'',
       isScroll:false,
-      timeoutflag : null
+      timeoutflag : null,
+      scrollFalse:''
     }
   },
   mounted() {
@@ -86,11 +87,13 @@ export default {
         });
         this.listScroll.on('scroll', (pos) => {
           // console.log(this.scrollY)
-          
+
           // console.log(this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight )
           // const tops = this.$refs.wrapper.offsetTop;
           // 使用abs绝对值（否则 pos.y拿到值是负数）
+          this.scrollFalse = Math.round(pos.y)
           this.scrollY = Math.abs(Math.round(pos.y));
+
           // if(this.scrollY >= tops) {
           //     this.isScroll = true;
           // }else {
@@ -110,11 +113,14 @@ export default {
           }
           }
           if(this.tabFix){
-            // console.log(this.scrollY)
-            if(this.scrollY >= 200){
-              this.$emit('fixer',true)
+            if(this.scrollFalse>0&&this.scrollFalse<20){
+              this.$emit('big',this.scrollFalse)
             }else{
-              this.$emit('fixer',false)
+              if(this.scrollY >= 200){
+                this.$emit('fixer',true)
+              }else{
+                this.$emit('fixer',false)
+              }
             }
           }
 

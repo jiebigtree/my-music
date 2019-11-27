@@ -49,7 +49,7 @@ export default {
       // console.log("歌手单曲");
       let url = "http://localhost:3000/artists?id=" + this.id;
       axios.get(url).then(res => {
-        console.log(res.data.hotSongs);
+        // console.log(res.data.hotSongs);
         this.songArray = res.data.hotSongs;
       });
     },
@@ -82,8 +82,9 @@ export default {
   width 100%
   .one-item
     width 100%
-    height 40px
-    line-height 40px
+    height 45px
+    border-bottom 1px solid #eee
+    background-color white
     .index
       width 15%
       text-align center

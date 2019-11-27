@@ -10,6 +10,7 @@ import list from "./components/publicComponents/list.vue";
 import "@/icons";
 
 import "./assets/stylus/index.styl";
+import "./assets/stylus/font.styl";
 
 Vue.use(Vant);
 Vue.component("topHeader", topHeader);

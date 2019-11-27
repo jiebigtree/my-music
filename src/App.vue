@@ -65,6 +65,7 @@ export default {
     height 100%
     background-color $bodybgc
     overflow hidden
+    font-family: 'yunyou';
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,

@@ -11,7 +11,7 @@
         >
           <svg-icon
             :iconClass="one.iconClass"
-            style="width:20px;height:20px;fill:white"
+            style="width:20px;height:20px"
           ></svg-icon>
           <span class="tab-span">{{ one.name }}</span>
         </router-link>

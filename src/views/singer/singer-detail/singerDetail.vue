@@ -1,7 +1,7 @@
 <template>
   <div class="bigest-container">
     <topHeader>
-      <div slot="center-search">热门歌手</div>
+      <div slot="center-search">{{ name }}</div>
       <div slot="right-icon">
         <svg-icon
           iconClass="playing"
@@ -25,11 +25,19 @@
         MV
       </div>
     </div>
-    <scroll :nofooter="true" :pic="pic" :tabFix="tabFix" @fixer="fixer">
+    <scroll
+      :nofooter="true"
+      :pic="pic"
+      :tabFix="tabFix"
+      @fixer="fixer"
+      @big="big"
+    >
       <div slot="list">
-        <div :style="style">
-          <div class="pic-mask">
-            <h1>{{ name }}</h1>
+        <div class="pic-con">
+          <div :style="style" ref="bigPic" class="pic-con">
+            <div class="pic-mask">
+              <!-- <h1>{{ name }}</h1> -->
+            </div>
           </div>
         </div>
         <div>
@@ -73,7 +81,7 @@ export default {
       pic: this.$route.params.singerPic,
       name: this.$route.params.singerName,
       currentView: "singerSong",
-      style: `background-image:url(${this.$route.params.singerPic});width:100%;height:200px;background-position:center center;background-size:100%`,
+      style: `background-image:url(${this.$route.params.singerPic});width:100%;height:200px;background-position:center center;background-size:100%;overflow:hidden`,
       isCurrent: true,
       tabFix: true,
       fixCls: false
@@ -86,8 +94,13 @@ export default {
       this.isCurrent = bool;
     },
     fixer(i) {
-      console.log(i);
+      // console.log(i);
       this.fixCls = i;
+    },
+    big(i) {
+      console.log(i / 10);
+      this.$refs.bigPic.style.transform = `scale(${1 + i / 15})`;
+      this.$refs.bigPic.style.overflow = "hidden";
     }
   },
   created() {}
@@ -113,15 +126,21 @@ export default {
   height 40px
   width 100%
   line-height 40px
+  background-color white
   .one-tab
     width 50%
     text-align center
   .isCurrent
-    background-color rgba(0,0,0,.3)
+    background-color #eee
 .fixCls
   position fixed!important
   top 50px;
   left 0
   z-index 10
   width 100%
+  background-color white
+.pic-con
+  width 100%
+  height 240px
+  overflow hidden
 </style>

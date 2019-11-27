@@ -52,8 +52,10 @@ export default {
   width 100%
   .one-item
     width 100%
-    height 40px
-    line-height 40px
+    height 45px
+    line-height 45px
+    background-color white
+    border-bottom 1px solid #eee
     .index
       width 15%
       text-align center

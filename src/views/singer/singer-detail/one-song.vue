@@ -1,9 +1,13 @@
 <template>
   <div class="one-song">
-    <div @click="choose">
-      <span>{{ index + 1 }}</span
-      ><span>{{ name }}</span>
-      <span>{{ alName }}</span>
+    <div @click="choose" class="line-container">
+      <div class="left-con">
+        <span class="index">{{ index + 1 }}</span>
+      </div>
+      <div class="center-con">
+        <span class="song-name">{{ name }}</span>
+        <span class="al-name">{{ alName }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -69,4 +73,25 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.one-song
+  background-color white
+  .line-container
+    display flex
+    .left-con
+      line-height 40px
+      width 10%
+      text-align center
+    .center-con
+      margin-left 10px
+      .song-name
+        display block
+        height 28px;
+        line-height 28px
+      .al-name
+        display block
+        height 15px
+        line-height 15px
+        font-size 12px
+        color #999
+</style>
