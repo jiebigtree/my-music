@@ -1,8 +1,5 @@
 <template>
   <div class="playing" v-show="playList.length > 0">
-    <!-- <audio :src="playUrl" controls=""></audio>
-    <img class="playing-bg" :src="songPic" alt="" />
-    {{ playUrl }} -->
     <transition name="slide-fade">
       <div class="full-screen" v-show="fullScreen">
         <div
@@ -33,25 +30,50 @@
           </div>
         </topHeader>
 
-        <div class="cd" :style="style"  @click="toggleCenter" v-show="!showLyrics">
+        <div
+          class="cd"
+          :style="style"
+          @click="toggleCenter"
+          v-show="!showLyrics"
+        >
           <img :src="currentSong.pic" alt="" />
-          <!-- <img src="@/assets/images/cd.png" alt="" width="100%" /> -->
         </div>
-        <div class="wrapper" @click="toggleCenter" v-show="showLyrics" ref="wrapper">
+        <div
+          class="wrapper"
+          @click="toggleCenter"
+          v-show="showLyrics"
+          ref="wrapper"
+        >
           <div class="lyric-container" ref="content">
-            <p ref="lyricLine" class="text" v-for="(line,index) in lyrArr" :key="index" :class="{'current' : lineNum(line.time) }">
+            <p
+              ref="lyricLine"
+              class="text"
+              v-for="(line, index) in lyrArr"
+              :key="index"
+            >
               {{ line.txt }}
             </p>
           </div>
         </div>
         <div style="width:100%;overflow:hidden">
-          <audio ref="audio" :src="currentSong.url" @ended="endMusic" @canplay="ready" @timeupdate="updateTime"></audio>
+          <audio
+            ref="audio"
+            :src="currentSong.url"
+            @ended="endMusic"
+            @canplay="ready"
+            @timeupdate="updateTime"
+          ></audio>
         </div>
         <div class="bottom">
           <div class="play-time-container">
-            <div class="left-time">{{format(currenTime)}}</div>
-            <div class="progress"><progresser :percent="percent" @percentChange='percentChanger'></progresser></div>
-            <div class="right-time">{{format(duration)}}</div>
+            <div class="left-time">{{ format(currenTime) }}</div>
+            <div class="progress">
+              <progresser
+                :percent="percent"
+                @percentChange="percentChanger"
+              ></progresser>
+            </div>
+            <div class="right-time">{{ format(duration) }}</div>
           </div>
           <div class="bottom-icons">
             <div class="sequence">
@@ -80,7 +102,7 @@
             </div>
             <div class="next" @click="next">
               <svg-icon
-                iconClass="next" 
+                iconClass="next"
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
@@ -100,51 +122,54 @@
 <script>
 import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
-import progresser from '@/components/publicComponents/progress.vue'
-import Lyric from 'lyric-parser'
-import BScroll from 'better-scroll'
+import progresser from "@/components/publicComponents/progress.vue";
+// import Lyric from "lyric-parser";
+import BScroll from "better-scroll";
 
 export default {
   name: "playing",
-  components:{
+  components: {
     progresser
   },
   data() {
     return {
       roundState: true,
-      playingState:false,
-      musicOk:false,
-      currenTime:0,
-      duration:0,
-      lyrics:'',
-      showLyrics:true,
-      lyrArr:[],
-      scroll:'',
-      scrollY:'',
-      isScroll:false,
-      timeoutflag : null,
-      scrollTop:0
+      playingState: false,
+      musicOk: false,
+      currenTime: 0,
+      duration: 0,
+      lyrics: "",
+      showLyrics: true,
+      lyrArr: [],
+      scroll: "",
+      scrollY: "",
+      isScroll: false,
+      timeoutflag: null,
+      scrollTop: 0
     };
   },
   mounted() {
-    setTimeout(()=>{
-      this.initScroll()
-    },600)
+    setTimeout(() => {
+      this.initScroll();
+    }, 600);
   },
   methods: {
-    initScroll(){
-        this.listScroll = new BScroll(this.$refs.wrapper,{
-          probeType: 3,
-          scrollY: true,
-          click: true,
-          useTransition:false,  // 防止iphone微信滑动卡顿
-          bounce:true,
-          momentumLimitDistance: 5
-        });
-        this.listScroll.on('scroll', (pos) => {
-          this.scrollY = Math.abs(Math.round(pos.y));
-          // console.log(this.scrollY)
-          })
+    initScroll() {
+      this.listScroll = new BScroll(this.$refs.wrapper, {
+        probeType: 3,
+        scrollY: true,
+        click: true,
+        useTransition: false, // 防止iphone微信滑动卡顿
+        bounce: true,
+        momentumLimitDistance: 5
+      });
+      this.scrolling();
+    },
+    scrolling() {
+      this.listScroll.on("scroll", pos => {
+        this.scrollY = Math.abs(Math.round(pos.y));
+        // console.log(this.scrollY)
+      });
     },
     baker() {
       this.setFullScreen(false);
@@ -152,7 +177,7 @@ export default {
     ...mapMutations({
       setFullScreen: "SET_FULL_SCREEN",
       setPlayingState: "SET_PLAYING_STATE",
-      setCurrentIndex:'SET_CURRENT_INDEX'
+      setCurrentIndex: "SET_CURRENT_INDEX"
     }),
     open() {
       this.setFullScreen(true);
@@ -161,66 +186,66 @@ export default {
       this.setPlayingState(!this.playing);
       this.roundState = !this.roundState;
     },
-    pre(){
-      if(!this.musicOk){
-        return
+    pre() {
+      if (!this.musicOk) {
+        return;
       }
-      let index = this.currentIndex - 1
-      if(index === -1){
-        index = this.playList.length - 1
+      let index = this.currentIndex - 1;
+      if (index === -1) {
+        index = this.playList.length - 1;
       }
-      this.setCurrentIndex(index)
-      if(!this.playing){
-        this.playingState = true
+      this.setCurrentIndex(index);
+      if (!this.playing) {
+        this.playingState = true;
       }
-      this.musicOk = false
+      this.musicOk = false;
     },
-    next(){
-      if(!this.musicOk){
-        return
+    next() {
+      if (!this.musicOk) {
+        return;
       }
-      let index = this.currentIndex + 1
-      if(index === this.playList.length){
-        index = 0
+      let index = this.currentIndex + 1;
+      if (index === this.playList.length) {
+        index = 0;
       }
-      this.setCurrentIndex(index)
-      if(!this.playing){
-        this.playingState = true
+      this.setCurrentIndex(index);
+      if (!this.playing) {
+        this.playingState = true;
       }
-      this.musicOk = false
+      this.musicOk = false;
     },
-    endMusic(){
-      this.next()
+    endMusic() {
+      this.next();
     },
-    ready(){
-      this.musicOk = true
+    ready() {
+      this.musicOk = true;
     },
-    updateTime(e){
-      this.duration = e.target.duration
-      this.currenTime = e.target.currentTime
+    updateTime(e) {
+      this.duration = e.target.duration;
+      this.currenTime = e.target.currentTime;
     },
-    _pad(num,n=2){
-      let len = num.toString().length
-      while(len < n){
-        num = '0' + num
-        len ++
+    _pad(num, n = 2) {
+      let len = num.toString().length;
+      while (len < n) {
+        num = "0" + num;
+        len++;
       }
-      return num
+      return num;
     },
-    format(interval){
-      interval = interval | 0
-      const minute = this._pad(interval / 60 | 0)
-      const second = this._pad(interval % 60)
-      return `${minute}:${second}`
+    format(interval) {
+      interval = interval | 0;
+      const minute = this._pad((interval / 60) | 0);
+      const second = this._pad(interval % 60);
+      return `${minute}:${second}`;
     },
-    percentChanger(percent){
-      this.$refs.audio.currentTime = this.duration * percent
-      if(!this.playing){
-        this.togglePlaying()
+    percentChanger(percent) {
+      this.$refs.audio.currentTime = this.duration * percent;
+      if (!this.playing) {
+        this.togglePlaying();
       }
     },
-    toggleCenter(){
-      this.showLyrics = !this.showLyrics
+    toggleCenter() {
+      this.showLyrics = !this.showLyrics;
     }
   },
   computed: {
@@ -230,7 +255,7 @@ export default {
       "currentSong",
       "playList",
       "currentIndex",
-      "playing",
+      "playing"
     ]),
     style() {
       if (this.roundState) {
@@ -239,41 +264,45 @@ export default {
         return "animation-play-state:paused";
       }
     },
-    percent(){
-      return this.currenTime / this.duration
-    },
-    lineNum(){
-      return function(index){
-        if(parseInt(index.replace(":","")) <= parseInt(this.format(this.currenTime).replace(":",""))){
-          this.scrollTop += 35
-          return true
-        }
-      }
+    percent() {
+      return this.currenTime / this.duration;
     }
+    // lineNum() {
+    //   // return function(index, time) {
+    //   //   if (time == this.format(this.currenTime)) {
+    //   //     // this.num = index
+    //   //     console.log(index);
+    //   //     return index;
+    //   //   }
+    //   // };
+    // }
   },
   watch: {
     currentSong() {
       this.$nextTick(() => {
         this.$refs.audio.play();
       });
-      let url ="http://localhost:3000/lyric?id=" + this.currentSong.id;
+      let url = "http://localhost:3000/lyric?id=" + this.currentSong.id;
       axios.get(url).then(res => {
         // console.log(res.data.lrc.lyric);
-        this.lyrics = res.data.lrc.lyric
-        const arr1 = this.lyrics.split("[").slice(1)
-        // console.log(arr1)
-        for(let i=0;i<arr1.length;i++){
-          this.lyrArr[i] = {time:arr1[i].slice(0,5),txt:arr1[i].slice(10)}
+        this.lyrics = res.data.lrc.lyric;
+        const arr1 = this.lyrics.split("[").slice(1);
+        // console.log(arr1[i].indexOf("]"));
+        for (let i = 0; i < arr1.length; i++) {
+          this.lyrArr[i] = {
+            time: arr1[i].slice(0, arr1[i].indexOf("]")),
+            txt: arr1[i].slice(arr1[i].indexOf("]") + 1)
+          };
         }
-      })
+      });
     },
     playing(newPlaying) {
       const audio = this.$refs.audio;
       this.$nextTick(() => {
         newPlaying ? audio.play() : audio.pause();
         // console.log(newPlaying);
-        this.playingState = newPlaying
-        this.roundState = newPlaying
+        this.playingState = newPlaying;
+        this.roundState = newPlaying;
       });
     }
   }
