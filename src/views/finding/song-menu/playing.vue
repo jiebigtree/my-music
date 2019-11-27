@@ -205,6 +205,11 @@ export default {
         return;
       }
       let index = this.currentIndex + 1;
+      // console.log(this.playList[index].url);
+      if (this.playList[index].url == null) {
+        console.log("该歌曲无法播放");
+        index++;
+      }
       if (index === this.playList.length) {
         index = 0;
       }
