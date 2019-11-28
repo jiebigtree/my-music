@@ -101,7 +101,7 @@
                 style="width:20px;height:20px"
               ></svg-icon>
             </div>
-            <div class="list">
+            <div class="list" @click="showList">
               <svg-icon
                 iconClass="list"
                 style="width:20px;height:20px"
@@ -109,6 +109,20 @@
             </div>
           </div>
         </div>
+        <van-popup
+          v-model="listShow"
+          position="bottom"
+          :style="{ height: '65%' }"
+        >
+          <div class="play-list-pop">
+            <ul>
+              <li v-for="(item,index) in playList" :key="index">
+                <span class="song-name">{{item.songName}}</span>
+                <span class="singer-name">{{item.singer}}</span>
+              </li>
+            </ul>
+          </div>
+        </van-popup>
       </div>
     </transition>
   </div>
@@ -135,7 +149,8 @@ export default {
       lyrArr: [],
       result: [],
       flagN: 0,
-      playSequence: 0
+      playSequence: 0,
+      listShow:false
     };
   },
   beforeRouterLeave(to, from, next) {
@@ -285,12 +300,14 @@ export default {
         this.playSequence++;
       }
       console.log(this.playSequence);
+    },
+    showList(){
+      this.listShow = true
     }
   },
   computed: {
     ...mapGetters([
       "fullScreen",
-      "playList",
       "currentSong",
       "playList",
       "currentIndex",
