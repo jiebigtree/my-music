@@ -13,7 +13,7 @@
           <div slot="left-icon" @click="baker">
             <svg-icon
               iconClass="back"
-              style="fill:red;width:20px;height:20px"
+              style="fill:white;width:20px;height:20px"
             ></svg-icon>
           </div>
           <div slot="center-search">
