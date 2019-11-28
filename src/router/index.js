@@ -12,7 +12,7 @@ const routes = [
   {
     path: "/finding",
     name: "finding",
-    meta: { index: 0 },
+    meta: { index: 0, keepAlive: true },
     component: Finding
   },
   {
@@ -21,21 +21,21 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    meta: { index: 1 },
+    meta: { index: 1, keepAlive: true },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/singer/singer.vue")
   },
   {
     path: "/mine",
     name: "mine",
-    meta: { index: 1 },
+    meta: { index: 1, keepAlive: true },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/mine/mine.vue")
   },
   {
     path: "/cloud",
     name: "cloud",
-    meta: { index: 1 },
+    meta: { index: 1, keepAlive: true },
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/cloud/cloud.vue")
   },
@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/songMenu/:id",
     name: "song-menu",
-    meta: { index: 2 },
+    meta: { index: 2, keepAlive: false },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../views/finding/song-menu/songMenu.vue"
@@ -67,7 +67,7 @@ const routes = [
   {
     path: "/singer-detail/:singerId/:singerPic/:singerName",
     name: "singer-detail",
-    meta: { index: 2 },
+    meta: { index: 2, keepAlive: true },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../views/singer/singer-detail/singerDetail.vue"

@@ -58,7 +58,9 @@
             </div>
           </div>
         </div>
-        <component :is="currentView" :id="id"></component>
+        <keep-alive>
+          <component :is="currentView" :id="id"></component>
+        </keep-alive>
       </div>
     </scroll>
   </div>
@@ -126,12 +128,12 @@ export default {
   height 40px
   width 100%
   line-height 40px
-  background-color white
+  background-color #eee
   .one-tab
     width 50%
     text-align center
   .isCurrent
-    background-color #eee
+    background-color white
 .fixCls
   position fixed!important
   top 50px;

@@ -8,7 +8,7 @@
         </li>
       </ul>
     </div>
-    <div v-else>
+    <div v-else class="none-mv">
       这个歌手没有MV哦
     </div>
   </div>
@@ -67,4 +67,10 @@ export default {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+.none-mv
+  width 100%
+  height 200px
+  background-color #eee
+  line-height 200px
+  text-align center
 </style>

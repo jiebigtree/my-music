@@ -116,6 +116,10 @@ export default {
       newDish: []
     };
   },
+  beforeRouterLeave(to, from, next) {
+    to.meta.keepAlive = false;
+    next();
+  },
   methods: {
     getBannerPic() {
       axios.get("http://localhost:3000/banner?type=2").then(res => {

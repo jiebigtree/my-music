@@ -30,30 +30,8 @@
           </div>
         </topHeader>
 
-        <div
-          class="cd"
-          :style="style"
-          @click="toggleCenter"
-          v-show="!showLyrics"
-        >
+        <div class="cd" :style="style" @click="toggleCenter">
           <img :src="currentSong.pic" alt="" />
-        </div>
-        <div
-          class="wrapper"
-          @click="toggleCenter"
-          v-show="showLyrics"
-          ref="wrapper"
-        >
-          <div class="lyric-container" ref="content">
-            <p
-              ref="lyricLine"
-              class="text"
-              v-for="(line, index) in lyrArr"
-              :key="index"
-            >
-              {{ line.txt }}
-            </p>
-          </div>
         </div>
         <div style="width:100%;overflow:hidden">
           <audio
@@ -65,6 +43,7 @@
           ></audio>
         </div>
         <div class="bottom">
+          <p ref="lyricLine" class="lyric"></p>
           <div class="play-time-container">
             <div class="left-time">{{ format(currenTime) }}</div>
             <div class="progress">
@@ -123,8 +102,6 @@
 import axios from "axios";
 import { mapGetters, mapMutations } from "vuex";
 import progresser from "@/components/publicComponents/progress.vue";
-// import Lyric from "lyric-parser";
-import BScroll from "better-scroll";
 
 export default {
   name: "playing",
@@ -139,38 +116,17 @@ export default {
       currenTime: 0,
       duration: 0,
       lyrics: "",
-      showLyrics: false,
       lyrArr: [],
-      scroll: "",
-      scrollY: "",
-      isScroll: false,
-      timeoutflag: null,
-      scrollTop: 0
+      result: [],
+      flagN: 0
     };
   },
-  mounted() {
-    setTimeout(() => {
-      this.initScroll();
-    }, 600);
+  beforeRouterLeave(to, from, next) {
+    to.meta.keepAlive = true;
+    next();
   },
+  mounted() {},
   methods: {
-    initScroll() {
-      this.listScroll = new BScroll(this.$refs.wrapper, {
-        probeType: 3,
-        scrollY: true,
-        click: true,
-        useTransition: false, // 防止iphone微信滑动卡顿
-        bounce: true,
-        momentumLimitDistance: 5
-      });
-      this.scrolling();
-    },
-    scrolling() {
-      this.listScroll.on("scroll", pos => {
-        this.scrollY = Math.abs(Math.round(pos.y));
-        // console.log(this.scrollY)
-      });
-    },
     baker() {
       this.setFullScreen(false);
     },
@@ -251,6 +207,50 @@ export default {
     },
     toggleCenter() {
       this.showLyrics = !this.showLyrics;
+    },
+    getLrc() {
+      let timeReg = /\[\d{2}:\d{2}\.\d{2,3}\]/g; //匹配时间的正则表达式
+      for (let i = 0; i < this.lyrics.length - 1; i++) {
+        let time = this.lyrics[i].match(timeReg); //获取歌词里的时间
+        let value = this.lyrics[i].replace(timeReg, ""); //获取纯歌词文本
+
+        for (let j = 0; j < time.length; j++) {
+          let t = time[j].slice(1, -1).split(":"); //t[0]分钟，t[1]秒
+          let timeArr = parseInt(t[0], 10) * 60 + parseFloat(t[1]);
+          this.result.push([timeArr, value]); //以[时间(秒)，歌词]的形式存进result
+        }
+      }
+      this.showLrc();
+    },
+    showLrc() {
+      let that = this;
+      if (this.playing) {
+        setInterval(function() {
+          let curTime = that.currenTime; //获取当前的播放时间
+          if (
+            curTime > that.result[that.flagN + 1][0] ||
+            curTime < that.result[that.flagN][0]
+          ) {
+            for (let i = 0; i < that.result.length; i++) {
+              if (
+                curTime > that.result[i][0] &&
+                curTime < that.result[i + 1][0]
+              ) {
+                that.flagN = i;
+              }
+            }
+          }
+          if (
+            curTime > that.result[that.flagN][0] &&
+            curTime < that.result[that.flagN + 1][0] &&
+            that.$refs.lyricLine.innerHTML !== that.result[that.flagN][1]
+          ) {
+            that.$refs.lyricLine.innerHTML = that.result[that.flagN][1];
+            that.flagN =
+              that.flagN === that.result.length - 2 ? 0 : that.flagN + 1;
+          }
+        }, 400);
+      }
     }
   },
   computed: {
@@ -281,16 +281,8 @@ export default {
       });
       let url = "http://localhost:3000/lyric?id=" + this.currentSong.id;
       axios.get(url).then(res => {
-        // console.log(res.data.lrc.lyric);
-        this.lyrics = res.data.lrc.lyric;
-        const arr1 = this.lyrics.split("[").slice(1);
-        // console.log(arr1[i].indexOf("]"));
-        for (let i = 0; i < arr1.length; i++) {
-          this.lyrArr[i] = {
-            time: arr1[i].slice(0, arr1[i].indexOf("]")),
-            txt: arr1[i].slice(arr1[i].indexOf("]") + 1)
-          };
-        }
+        this.lyrics = res.data.lrc.lyric.split("\n");
+        this.getLrc();
       });
     },
     playing(newPlaying) {
