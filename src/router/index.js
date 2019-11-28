@@ -67,7 +67,7 @@ const routes = [
   {
     path: "/singer-detail/:singerId/:singerPic/:singerName",
     name: "singer-detail",
-    meta: { index: 2, keepAlive: true },
+    meta: { index: 2 },
     component: () =>
       import(
         /* webpackChunkName: "about" */ "../views/singer/singer-detail/singerDetail.vue"

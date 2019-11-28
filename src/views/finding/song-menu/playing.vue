@@ -55,10 +55,26 @@
             <div class="right-time">{{ format(duration) }}</div>
           </div>
           <div class="bottom-icons">
-            <div class="sequence">
+            <div class="sequence" @click="changeSequence">
+              <svg-icon
+                iconClass="round"
+                style="width:20px;height:20px"
+                v-show="playSequence == 0"
+              ></svg-icon>
               <svg-icon
                 iconClass="circle"
                 style="width:20px;height:20px"
+                v-show="playSequence == 1"
+              ></svg-icon>
+              <svg-icon
+                iconClass="sequence"
+                style="width:20px;height:20px"
+                v-show="playSequence == 2"
+              ></svg-icon>
+              <svg-icon
+                iconClass="random"
+                style="width:20px;height:20px"
+                v-show="playSequence == 3"
               ></svg-icon>
             </div>
             <div class="pre" @click="pre">
@@ -118,7 +134,8 @@ export default {
       lyrics: "",
       lyrArr: [],
       result: [],
-      flagN: 0
+      flagN: 0,
+      playSequence: 0
     };
   },
   beforeRouterLeave(to, from, next) {
@@ -176,7 +193,16 @@ export default {
       this.musicOk = false;
     },
     endMusic() {
-      this.next();
+      if (this.playSequence == 0) {
+        this.next();
+        console.log("列表循环");
+      } else if (this.playSequence == 1) {
+        console.log("单曲循环");
+      } else if (this.playSequence == 2) {
+        console.log("顺序播放");
+      } else {
+        console.log("随机播放");
+      }
     },
     ready() {
       this.musicOk = true;
@@ -251,6 +277,14 @@ export default {
           }
         }, 400);
       }
+    },
+    changeSequence() {
+      if (this.playSequence == 3) {
+        this.playSequence = 0;
+      } else {
+        this.playSequence++;
+      }
+      console.log(this.playSequence);
     }
   },
   computed: {
