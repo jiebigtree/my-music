@@ -2,7 +2,7 @@
   <div class="top-header-conatiner">
     <div class="top-header">
       <div class="slot-container">
-        <div class="left-icon">
+        <div class="left-icon" style="leftShow">
           <slot name="left-icon">
             <div @click="goBack">
               <svg-icon
@@ -54,6 +54,12 @@ export default {
   created() {},
   computed: {
     ...mapGetters(["fullScreen"])
+  },
+  props: {
+    leftShow: {
+      type: String,
+      default: ""
+    }
   }
 };
 </script>

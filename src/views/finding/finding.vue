@@ -1,23 +1,31 @@
 <template>
   <div class="finding">
-    <topHeader>
+    <topHeader v-if="!searchBtn">
       <div slot="left-icon" @click="leftMenu()">
         <svg-icon
           iconClass="menu"
           style="fill:white;width:20px;height:20px"
         ></svg-icon>
       </div>
-      <input
-        type="text"
-        slot="center-search"
-        :placeholder="searchKeyword"
-        @click="showKeyBoard"
-      />
+      <div slot="center-search">
+        <input type="text" :placeholder="searchKeyword" @click="showKeyBoard" />
+      </div>
       <svg-icon
         iconClass="playing"
         slot="right-icon"
         style="fill:white;width:20px;height:20px"
       ></svg-icon>
+    </topHeader>
+    <topHeader v-if="searchBtn">
+      <div slot="left-icon" @click="closeSearch">
+        <svg-icon iconClass="back" style="width:20px;height:20px"></svg-icon>
+      </div>
+      <div slot="center-search">
+        <input type="text" :placeholder="searchKeyword" />
+      </div>
+      <div slot="right-icon">
+        搜索
+      </div>
     </topHeader>
     <scroll>
       <div slot="list">
@@ -90,6 +98,16 @@
             </div>
           </div>
         </van-popup> -->
+
+        <van-popup
+          v-model="searchBtn"
+          position="left"
+          :style="{ width: '100%', height: '100%' }"
+        >
+          <div class="search-container">
+            aaa
+          </div>
+        </van-popup>
       </div>
     </scroll>
   </div>
@@ -116,8 +134,8 @@ export default {
         { iconClass: "mine", text: "电台", pageName: "" },
         { iconClass: "account", text: "直播", pageName: "" }
       ],
-      show: false,
-      newDish: []
+      newDish: [],
+      searchBtn: false
     };
   },
   beforeRouterLeave(to, from, next) {
@@ -158,11 +176,11 @@ export default {
         // console.log(this.newDish);
       });
     },
-    leftMenu() {
-      this.show = !this.show;
-    },
     showKeyBoard() {
-      console.log("展示键盘");
+      this.searchBtn = true;
+    },
+    closeSearch() {
+      this.searchBtn = false;
     }
   },
   created() {
