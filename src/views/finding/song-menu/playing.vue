@@ -116,9 +116,17 @@
         >
           <div class="play-list-pop">
             <ul>
-              <li v-for="(item,index) in playList" :key="index">
-                <span class="song-name">{{item.songName}}</span>
-                <span class="singer-name">{{item.singer}}</span>
+              <li
+                v-for="(item, index) in playList"
+                :key="index"
+                class="pop-list-li"
+                @click="listChoose(index)"
+              >
+                <div class="name-container">
+                  <span class="song-name">{{ item.songName }}</span>
+                  <span class="singer-name">-{{ item.singer }}</span>
+                </div>
+                <div class="delete">X</div>
               </li>
             </ul>
           </div>
@@ -150,7 +158,7 @@ export default {
       result: [],
       flagN: 0,
       playSequence: 0,
-      listShow:false
+      listShow: false
     };
   },
   beforeRouterLeave(to, from, next) {
@@ -301,8 +309,12 @@ export default {
       }
       console.log(this.playSequence);
     },
-    showList(){
-      this.listShow = true
+    showList() {
+      this.listShow = true;
+    },
+    listChoose(i){
+      this.setCurrentIndex(i);
+      this.listShow = false
     }
   },
   computed: {

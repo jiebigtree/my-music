@@ -7,8 +7,12 @@
           style="fill:white;width:20px;height:20px"
         ></svg-icon>
       </div>
-
-      <input type="text" slot="center-search" :placeholder="searchKeyword" />
+      <input
+        type="text"
+        slot="center-search"
+        :placeholder="searchKeyword"
+        @click="showKeyBoard"
+      />
       <svg-icon
         iconClass="playing"
         slot="right-icon"
@@ -71,7 +75,7 @@
             <span class="singer-name"> {{ one.artist.name }} </span>
           </div>
         </div>
-        <van-popup
+        <!-- <van-popup
           v-model="show"
           position="left"
           :style="{ width: '45%', height: '100%' }"
@@ -85,7 +89,7 @@
               <div>关于</div>
             </div>
           </div>
-        </van-popup>
+        </van-popup> -->
       </div>
     </scroll>
   </div>
@@ -156,8 +160,10 @@ export default {
     },
     leftMenu() {
       this.show = !this.show;
+    },
+    showKeyBoard() {
+      console.log("展示键盘");
     }
-    // 2912091415
   },
   created() {
     this.getBannerPic();
