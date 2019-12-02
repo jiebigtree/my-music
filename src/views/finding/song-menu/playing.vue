@@ -30,7 +30,7 @@
           </div>
         </topHeader>
 
-        <div class="cd" :style="style" @click="toggleCenter">
+        <div class="cd" :style="rotate" ref="cd">
           <img :src="currentSong.pic" alt="" />
         </div>
         <div style="width:100%;overflow:hidden">
@@ -180,7 +180,7 @@ export default {
     },
     togglePlaying() {
       this.setPlayingState(!this.playing);
-      this.roundState = !this.roundState;
+      // console.log(this.$refs.cd.style);
     },
     pre() {
       if (!this.musicOk) {
@@ -209,6 +209,7 @@ export default {
       if (index === this.playList.length) {
         index = 0;
       }
+      this.result = [];
       this.setCurrentIndex(index);
       if (!this.playing) {
         this.playingState = true;
@@ -253,9 +254,6 @@ export default {
       if (!this.playing) {
         this.togglePlaying();
       }
-    },
-    toggleCenter() {
-      this.showLyrics = !this.showLyrics;
     },
     getLrc() {
       let timeReg = /\[\d{2}:\d{2}\.\d{2,3}\]/g; //匹配时间的正则表达式
@@ -312,9 +310,10 @@ export default {
     showList() {
       this.listShow = true;
     },
-    listChoose(i){
+    listChoose(i) {
+      // this.result = [];
       this.setCurrentIndex(i);
-      this.listShow = false
+      this.listShow = false;
     }
   },
   computed: {
@@ -325,15 +324,15 @@ export default {
       "currentIndex",
       "playing"
     ]),
-    style() {
-      if (this.roundState) {
-        return "animation-play-state:play";
-      } else {
-        return "animation-play-state:paused";
-      }
-    },
     percent() {
       return this.currenTime / this.duration;
+    },
+    rotate() {
+      if (this.playing) {
+        return "";
+      } else {
+        return "animation: round 20s linear infinite";
+      }
     }
   },
   watch: {

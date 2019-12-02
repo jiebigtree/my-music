@@ -44,6 +44,7 @@
     left 50%
     margin-left: -140px
     margin-top: -140px
+    animation round 20s linear infinite
     img 
         position: absolute
         width: 70%
@@ -54,12 +55,12 @@
         margin-top: -35%
         border-radius: 50%
     background: linear-gradient(black,#111,#222,#444,#444,#222,#111,black);
-    animation round 20s linear infinite
+    // animation round 20s linear infinite
     
-    @keyframes round{
-        from{transform:rotate(0deg)}
-        to{transform:rotate(360deg)}
-        }
+@keyframes round{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+    }
 .full-screen
     background-color: black
     .song-name,.singer-name
@@ -103,7 +104,7 @@
 .lyric
     color: #ddd
     text-align: center
-    line-height: 80px
+    // line-height: 80px
 .play-list-pop
     background-color: white
     .pop-list-li
