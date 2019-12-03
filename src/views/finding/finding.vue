@@ -28,7 +28,7 @@
         />
       </div>
       <div slot="right-icon" @click.stop="search()" style="z-index:100">
-        搜索
+        <span style="font-size:14px">搜索</span>
       </div>
     </topHeader>
     <scroll>
@@ -87,7 +87,6 @@
             <span class="singer-name"> {{ one.artist.name }} </span>
           </div>
         </div>
-
         <van-popup
           v-model="searchBtn"
           position="bottom"
@@ -256,8 +255,14 @@ export default {
       localStorage.setItem("HistoryList", JSON.stringify(this.HistoryList));
     },
     search() {
-      console.log(this.searchKeyword);
+      // console.log(this.searchKeyword);
       this.SearchVal(this.searchKeyword);
+      this.$router.push({
+        name: "search-result",
+        params: {
+          name: this.searchKeyword
+        }
+      });
     }
   },
   created() {
