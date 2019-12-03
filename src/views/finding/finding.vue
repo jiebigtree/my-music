@@ -21,9 +21,13 @@
         <svg-icon iconClass="back" style="width:20px;height:20px"></svg-icon>
       </div>
       <div slot="center-search">
-        <input type="text" :placeholder="searchKeyword" />
+        <input
+          type="text"
+          :placeholder="searchKeyword"
+          v-model="searchKeyword"
+        />
       </div>
-      <div slot="right-icon">
+      <div slot="right-icon" @click.stop="search()" style="z-index:100">
         搜索
       </div>
     </topHeader>
@@ -83,29 +87,64 @@
             <span class="singer-name"> {{ one.artist.name }} </span>
           </div>
         </div>
-        <!-- <van-popup
-          v-model="show"
-          position="left"
-          :style="{ width: '45%', height: '100%' }"
-        >
-          <div class="pop-list-container">
-            <div class="my-name">Jerry树上的鱼熟了</div>
-            <div class="pop-list-menu-container">
-              <div>设置</div>
-              <div>主题</div>
-              <div>定时关闭</div>
-              <div>关于</div>
-            </div>
-          </div>
-        </van-popup> -->
 
         <van-popup
           v-model="searchBtn"
-          position="left"
+          position="bottom"
           :style="{ width: '100%', height: '100%' }"
+          :duration="duTime"
         >
           <div class="search-container">
-            aaa
+            <div class="search-history">
+              <p class="history-text">搜索历史</p>
+              <ul>
+                <li
+                  v-for="(item, index) in HistoryList"
+                  :key="index"
+                  @click="clickSearch(item)"
+                >
+                  <span v-if="item">{{ item }}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="hot-search">
+              <p class="history-text">热搜榜</p>
+              <ul>
+                <li
+                  v-for="(item, index) in hotSearch"
+                  :key="index"
+                  @click="clickSearch(item.searchWord)"
+                >
+                  <div class="hot-left">{{ index + 1 }}</div>
+                  <div class="hot-center">
+                    <span class="hot-name">{{ item.searchWord }}</span>
+                    <span class="icon" v-if="item.iconType == 0"></span>
+                    <span
+                      style="color:red"
+                      class="icon"
+                      v-if="item.iconType == 1"
+                      >HOT</span
+                    >
+                    <span
+                      style="color:green"
+                      class="icon"
+                      v-if="item.iconType == 2"
+                      >NEW</span
+                    >
+                    <span
+                      style="color:red"
+                      class="icon"
+                      v-if="item.iconType == 5"
+                      >↑</span
+                    >
+                    <span class="hot-text">{{ item.content }}</span>
+                  </div>
+                  <div class="hot-right">
+                    {{ item.score }}
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </van-popup>
       </div>
@@ -135,7 +174,10 @@ export default {
         { iconClass: "account", text: "直播", pageName: "" }
       ],
       newDish: [],
-      searchBtn: false
+      searchBtn: false,
+      duTime: 0.3,
+      HistoryList: [],
+      hotSearch: []
     };
   },
   beforeRouterLeave(to, from, next) {
@@ -143,6 +185,10 @@ export default {
     next();
   },
   methods: {
+    clickSearch(val) {
+      this.searchKeyword = val;
+      this.search();
+    },
     getBannerPic() {
       axios.get("http://localhost:3000/banner?type=2").then(res => {
         this.banerPic = res.data.banners;
@@ -178,9 +224,40 @@ export default {
     },
     showKeyBoard() {
       this.searchBtn = true;
+      axios.get("http://localhost:3000/search/hot/detail").then(res => {
+        console.log(res.data.data);
+        this.hotSearch = res.data.data;
+      });
+      this.SearchVal(" ");
     },
     closeSearch() {
       this.searchBtn = false;
+    },
+    SearchVal(val) {
+      val = val.trim(); // 清除空格
+      if (this.HistoryList.length > 0) {
+        // 有数据的话 判断
+        if (this.HistoryList.indexOf(val) !== -1) {
+          // 有相同的，先删除 再添加
+          this.HistoryList.splice(this.HistoryList.indexOf(val), 1);
+          this.HistoryList.unshift(val);
+        } else {
+          // 没有相同的 添加
+          this.HistoryList.unshift(val);
+        }
+      } else {
+        // 没有数据 添加
+        this.HistoryList.unshift(val);
+      }
+      if (this.HistoryList.length > 3) {
+        // 保留六个值
+        this.HistoryList.pop();
+      }
+      localStorage.setItem("HistoryList", JSON.stringify(this.HistoryList));
+    },
+    search() {
+      console.log(this.searchKeyword);
+      this.SearchVal(this.searchKeyword);
     }
   },
   created() {
