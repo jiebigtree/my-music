@@ -79,7 +79,16 @@ const routes = [
     meta: { index: 2 },
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../views/finding/search-result/searchResult.vue"
+        /* webpackChunkName: "about" */ "../views/finding/search/searchResult.vue"
+      )
+  },
+  {
+    path: "/search/:value",
+    name: "search",
+    meta: { index: 2 },
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/finding/search/search.vue"
       )
   }
 ];

@@ -19,8 +19,12 @@
         @click="getSingerDetail(item.id, item.picUrl, item.name)"
       >
         <img :src="item.picUrl" alt="" class="singer-pic" />
-        <span class="singer-name">{{ item.name }}</span>
+        <span class="singer-name"
+          >{{ item.name }}
+          <span class="float-right">></span>
+        </span>
       </div>
+      <div v-if="isLoad">aaa</div>
     </scroll>
   </div>
 </template>
@@ -37,7 +41,8 @@ export default {
       data: [],
       pulldown: true,
       pageNum: 20,
-      loading: true
+      loading: true,
+      isLoad: false
     };
   },
   created() {
@@ -55,6 +60,7 @@ export default {
     load() {
       this.pageNum += 20;
       this.loadData();
+      this.isLoad = true;
     },
     getSingerDetail(id, pic, name) {
       this.$router.push({

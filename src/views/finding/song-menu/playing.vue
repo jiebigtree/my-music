@@ -30,7 +30,7 @@
           </div>
         </topHeader>
 
-        <div class="cd" :style="rotate" ref="cd">
+        <div class="cd" :style="rotate">
           <img :src="currentSong.pic" alt="" />
         </div>
         <div style="width:100%;overflow:hidden">
@@ -260,7 +260,6 @@ export default {
       for (let i = 0; i < this.lyrics.length - 1; i++) {
         let time = this.lyrics[i].match(timeReg); //获取歌词里的时间
         let value = this.lyrics[i].replace(timeReg, ""); //获取纯歌词文本
-
         for (let j = 0; j < time.length; j++) {
           let t = time[j].slice(1, -1).split(":"); //t[0]分钟，t[1]秒
           let timeArr = parseInt(t[0], 10) * 60 + parseFloat(t[1]);

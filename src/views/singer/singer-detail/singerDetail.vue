@@ -140,7 +140,7 @@ export default {
   left 0
   z-index 10
   width 100%
-  background-color white
+  background-color #eee
 .pic-con
   width 100%
   height 240px

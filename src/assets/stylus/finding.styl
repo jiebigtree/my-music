@@ -43,13 +43,13 @@
     color $fontColor
     position relative
     border-top: 1px solid rgba(150,150,150,.2)
-    span:first-child
+    span:first-child,span:nth-child(2)
       font-weight 900
       font-size 20px
       float left
-      margin-left 5px
+      margin-left 10px
       line-height 50px
-    span:last-child
+    span:last-child,span:nth-child(3)
       float right
       width: 60px
       text-align: center
@@ -86,78 +86,24 @@
       text-align center
       font-size 10px
       color $fontColor
-  .dishes-container
-    display: flex
-    flex-direction: row
-    justify-content: space-around
-    .one-dish
-      width 30%
-      border-radius 5px
-      margin 5px 0
-      overflow hidden
-      .dash-name, .singer-name
-        display: block
-        font-size: 10px
-        line-height: 15px
-        color $fontColor
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
+.singer-name,.dish-name
+  display: block
+  font-size: 14px
+  overflow hidden
+  text-overflow: ellipsis 
+  white-space nowrap
 .top-header .slot-container .center-search input[data-v-1f8284bc]
   color black
-.search-history
-  // border: 1px solid red
-  ul
-    width: 100%
-    display: flex
-    justify-content space-around
-  ul li
-    background-color: rgb(248,248,248)
-    border-radius: 15px
-    height 30px
-    span 
-      display: block
-      margin: 2px 10px
-      line-height: 30px
-      font-size: 10px
-      color: #666
-
-.history-text
-  line-height: 50px
-  text-indent: 10px
-  font-size: 18px
-.hot-search
-  li
-    display: flex
-    height 55px
-    justify-content: space-around
-  .hot-left
-    width: 10%
-    text-align: center
-    line-height: 55px
-  .hot-center
-    width: 70%
-    .hot-name,.icon
-      display inline-block
-      overflow: hidden;
-      text-overflow:ellipsis;
-      white-space: nowrap;
-      line-height: 20px
-      font-size: 18px
-    .icon
-      margin-left: 10px
-    .hot-text
-      display: block
-      overflow: hidden;
-      text-overflow:ellipsis;
-      white-space: nowrap;
-      font-size: 10px
-      color: #ddd
-      line-height: 20px
-  .hot-right
-    text-align: center
-    line-height: 50px
-    font-size: 10px
-    color: #ddd
-
-
+.isNow
+  text-decoration:underline
+  color: rgb(192,1,32)
+.slide-left-enter-active {
+  transition: all .3s linear;
+}
+.slide-left-leave-active {
+  transition: all .3s linear;
+}
+.slide-left-enter
+  transform: translateX(100%)
+.slide-left-leave-to
+  transform: translateX(-100%)

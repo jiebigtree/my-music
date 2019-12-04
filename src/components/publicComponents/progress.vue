@@ -1,72 +1,75 @@
 <template>
   <div class="progress-container" ref="progressBar" @click="progressClick">
-        <div class="progress" ref="progress"></div>
-        <div class="dot" ref="progressBtn"
-        @touchstart.prevent="progressTouchStart"
-        @touchmove.prevent="progressTouchMove"
-        @touchend="progressTouchEnd"
-        ></div>
-    </div>
+    <div class="progress" ref="progress"></div>
+    <div
+      class="dot"
+      ref="progressBtn"
+      @touchstart.prevent="progressTouchStart"
+      @touchmove.prevent="progressTouchMove"
+      @touchend="progressTouchEnd"
+    ></div>
+  </div>
 </template>
 
 <script>
-const progressBtnWidth = 10
+const progressBtnWidth = 10;
 export default {
   name: "progresser",
-  props:{
-      percent:{
-          type:Number,
-          default:0
-      }
+  props: {
+    percent: {
+      type: Number,
+      default: 0
+    }
   },
-  watch:{
-      percent(newPercent){
-          if(newPercent >= 0 && !this.touch.initiated){
-              const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
-              const offsetWidth = newPercent * barWidth
-              this._offset(offsetWidth)
-          }
+  watch: {
+    percent(newPercent) {
+      if (newPercent >= 0 && !this.touch.initiated) {
+        const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth;
+        const offsetWidth = newPercent * barWidth;
+        this._offset(offsetWidth);
       }
+    }
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
-      progressTouchStart(e){
-          this.touch.initiated = true
-          this.touch.startX = e.touches[0].pageX
-          this.touch.left = this.$refs.progress.clientWidth
-      },
-      progressTouchMove(e){
-          if(!this.touch.initiated){
-              return
-          }
-          const delaX = e.touches[0].pageX - this.touch.startX
-          const offsetWidth = Math.min(this.$refs.progressBar.clientWidth - progressBtnWidth,Math.max(0,this.touch.left + delaX))
-          this._offset(offsetWidth)
-      },
-      progressTouchEnd(e){
-          this.touch.initiated = false
-          this.changePercent()
-      },
-      progressClick(e){
-          this._offset(e.offsetX)
-          this.changePercent()
-      },
-      _offset(offsetWidth){
-           this.$refs.progress.style.width = `${offsetWidth}px`
-           this.$refs.progressBtn.style.left =  `${offsetWidth}px`
-      },
-      changePercent(){
-          const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth
-          const percent = this.$refs.progress.clientWidth / barWidth
-          this.$emit('percentChange',percent)
+    progressTouchStart(e) {
+      this.touch.initiated = true;
+      this.touch.startX = e.touches[0].pageX;
+      this.touch.left = this.$refs.progress.clientWidth;
+    },
+    progressTouchMove(e) {
+      if (!this.touch.initiated) {
+        return;
       }
+      const delaX = e.touches[0].pageX - this.touch.startX;
+      const offsetWidth = Math.min(
+        this.$refs.progressBar.clientWidth - progressBtnWidth,
+        Math.max(0, this.touch.left + delaX)
+      );
+      this._offset(offsetWidth);
+    },
+    progressTouchEnd(e) {
+      this.touch.initiated = false;
+      this.changePercent();
+    },
+    progressClick(e) {
+      this._offset(e.offsetX);
+      this.changePercent();
+    },
+    _offset(offsetWidth) {
+      this.$refs.progress.style.width = `${offsetWidth}px`;
+      this.$refs.progressBtn.style.left = `${offsetWidth}px`;
+    },
+    changePercent() {
+      const barWidth = this.$refs.progressBar.clientWidth - progressBtnWidth;
+      const percent = this.$refs.progress.clientWidth / barWidth;
+      this.$emit("percentChange", percent);
+    }
   },
   created() {
-      this.touch = {}
+    this.touch = {};
   }
 };
 </script>

@@ -46,16 +46,13 @@ export default {
   },
   methods: {
     getSingerMusic() {
-      // console.log("歌手单曲");
       let url = "http://localhost:3000/artists?id=" + this.id;
       axios.get(url).then(res => {
-        // console.log(res.data.hotSongs);
         this.songArray = res.data.hotSongs;
       });
     },
     ...mapActions(["selectPlay"]),
     choose(song, index) {
-      // console.log(this.list[index].url);
       this.selectPlay({
         list: this.list,
         index: index

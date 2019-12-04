@@ -86,28 +86,17 @@ export default {
           momentumLimitDistance: 5
         });
         this.listScroll.on('scroll', (pos) => {
-          // console.log(this.scrollY)
-
-          // console.log(this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight )
-          // const tops = this.$refs.wrapper.offsetTop;
-          // 使用abs绝对值（否则 pos.y拿到值是负数）
           this.scrollFalse = Math.round(pos.y)
           this.scrollY = Math.abs(Math.round(pos.y));
-
-          // if(this.scrollY >= tops) {
-          //     this.isScroll = true;
-          // }else {
-          //     this.isScroll = false;
-          // }
           if(this.loading){
-            const jz = this.$refs.content.offsetHeight - this.$refs.wrapper.offsetHeight
+            const jz = this.$refs.content.offsetHeight
+                       - this.$refs.wrapper.offsetHeight
             if(this.scrollY >= jz){
               let that = this
               if(this.timeoutflag != null){
                 clearTimeout(this.timeoutflag);
               }
                 this.timeoutflag=setTimeout(function(){
-                  // console.log('loading')
                   that.$emit('load')
                 },200);
           }
@@ -161,12 +150,13 @@ export default {
   left: 0;
   right: 0;
   .list-one
-      border-bottom:1px solid rgba(200,200,200,.4)
+      // border-bottom:1px solid rgba(200,200,200,.4)
       vertical-align middle
       height 60px
       .singer-pic
           height 50px
-          border-radius:5px
+          width 50px
+          border-radius:50%
           float left
           margin-top:5px
           margin-left 10px
@@ -174,6 +164,11 @@ export default {
           float left
           margin-left:20px
           line-height 60px
+          width 78%
+          border-bottom:1px solid #eee
+          .float-right
+            float right
+            margin-right 15px
 .nofooter
   overflow: hidden;
   position: absolute;

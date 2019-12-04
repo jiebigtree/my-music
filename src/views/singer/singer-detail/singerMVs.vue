@@ -37,7 +37,6 @@ export default {
       console.log("歌手MV");
       let url = "http://localhost:3000/artist/mv?id=" + this.id;
       axios.get(url).then(res => {
-        // console.log(res.data.mvs);
         this.mvArray = res.data.mvs;
       });
     }

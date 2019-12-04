@@ -45,6 +45,11 @@
     margin-left: -140px
     margin-top: -140px
     animation round 20s linear infinite
+    background: linear-gradient(black,#111,#222,#444,#444,#222,#111,black);
+@keyframes round{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
     img 
         position: absolute
         width: 70%
@@ -54,13 +59,6 @@
         margin-left: -35%
         margin-top: -35%
         border-radius: 50%
-    background: linear-gradient(black,#111,#222,#444,#444,#222,#111,black);
-    // animation round 20s linear infinite
-    
-@keyframes round{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
-    }
 .full-screen
     background-color: black
     .song-name,.singer-name
@@ -106,11 +104,12 @@
     text-align: center
     // line-height: 80px
 .play-list-pop
-    background-color: white
+    background-color: rgba(250,250,250,.5)
     .pop-list-li
         display: flex
         justify-content: space-around
-        border-bottom: 1px solid #eee
+        // border-bottom: 1px solid #eee
+        border-bottom: 1px solid rgba(0,0,0,.3)
         .delete
             width: 5% 
             text-align: center
@@ -121,10 +120,13 @@
         text-overflow:ellipsis;
         white-space: nowrap;
     .song-name,.singer-name
-        color: black
+        color: #000
         display: inline-block
         line-height: 40px
+        text-shadow: 1px 1px 0 #aaa
     .singer-name
         color: #333
 .van-popup
     border-radius:20px 20px 0 0
+.van-popup--bottom
+    background-color: rgba(0,0,0,.2)

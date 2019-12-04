@@ -47,7 +47,6 @@ export default {
       setFullScreen: "SET_FULL_SCREEN"
     }),
     open() {
-      console.log("open");
       this.setFullScreen(true);
     }
   },
