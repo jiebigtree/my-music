@@ -27,7 +27,7 @@
       </div>
     </topHeader>
     <scroll>
-      <div class="search-container" slot="list" v-show="!searchResult">
+      <div class="search-container" slot="list" v-if="!searchResult">
         <div class="search-history">
           <p class="history-text">搜索历史</p>
           <ul>
@@ -70,7 +70,28 @@
           </ul>
         </div>
       </div>
-      <div v-show="searchResult"></div>
+      <div v-else slot="list">
+        <div class="result-count">共搜到{{ resultCount }}条匹配结果</div>
+        <div>
+          <ul v-show="resultArr">
+            <li
+              v-for="(item, index) in resultArr"
+              :key="index"
+              class="result-item"
+            >
+              <div class="float-left">
+                <span class="song-name">{{ item.name }}</span>
+                <span class="song-detail"
+                  >{{ item.artists[0].name }}-{{ item.album.name }}</span
+                >
+              </div>
+              <div class="float-right">
+                <span>></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </scroll>
   </div>
 </template>
@@ -88,7 +109,9 @@ export default {
       HistoryList: [],
       hotSearch: [],
       searchKeyword: "",
-      searchResult: false
+      searchResult: false,
+      resultCount: "",
+      resultArr: []
     };
   },
   methods: {
@@ -130,12 +153,11 @@ export default {
     search() {
       this.SearchVal(this.searchKeyword);
       this.searchResult = true;
-      // this.$router.push({
-      //   name: "search-result",
-      //   params: {
-      //     name: this.searchKeyword
-      //   }
-      // });
+      let url = "http://localhost:3000/search?keywords=" + this.searchKeyword;
+      axios.get(url).then(res => {
+        this.resultArr = res.data.result.songs;
+        this.resultCount = res.data.result.songCount;
+      });
     },
     closeResult() {
       this.searchResult = false;
@@ -144,6 +166,7 @@ export default {
   created() {
     this.getHotData();
     this.searchKeyword = this.$route.params.value;
+    console.log(localStorage.HistoryList);
   }
 };
 </script>
@@ -206,4 +229,37 @@ export default {
     line-height: 50px
     font-size: 10px
     color: #ddd
+.result-item
+  display flex
+  justify-content space-around
+  height 50px
+  border-top 1px solid #ddd
+  .float-left
+    width 80%
+  .float-right
+    width 10%
+    text-align right
+    line-height 50px
+  .song-detail,.song-name
+    display block
+  .song-detail
+    height 15px
+    line-height 8px
+    font-size 10px
+    color #999
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+  .song-name
+    height 35px
+    line-height 42px
+    font-size 18px
+    color rgb(21,42,107)
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+.result-count
+  line-height 50px
+  text-align center
+  color rgb(21,42,107)
 </style>
